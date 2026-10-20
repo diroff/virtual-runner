@@ -57,4 +57,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb79ad4b0d43c8846b2daf96fe1e440e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Installers.ProjectInstaller
-  _menuSceneName: MainMenu
+  _menuSceneName: SampleScene

@@ -6,6 +6,7 @@ namespace Tools
 {
     public static class ScreenshotUtility
     {
+#if UNITY_EDITOR
         private const string Folder = "Assets/Screenshots";
 
         [MenuItem("Tools/Capture Game View Screenshot %#s")]
@@ -24,5 +25,6 @@ namespace Tools
 
             Debug.Log($"Game View screenshot saved: {relativePath}");
         }
+#endif
     }
 }

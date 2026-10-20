@@ -16,6 +16,7 @@
     "com.unity.xr.management": "4.6.0",
     "com.unity.xr.meta-openxr": "2.6.1",
     "com.unity.xr.openxr": "1.17.1",
+    "com.unity.xr.openxr.picoxr": "file:D:/Программирование игор/Пакеты на новый проект/Unity OpenXR IntegrationSDK-1.4.0-20250407",
     "com.unity.modules.accessibility": "1.0.0",
     "com.unity.modules.adaptiveperformance": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
