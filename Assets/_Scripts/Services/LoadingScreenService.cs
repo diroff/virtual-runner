@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Services
 {
-    public class LoadingScreenService : IService
+    public class LoadingScreenService : ILoadingScreenService
     {
         private readonly Material _tvNoiseMaterial;
         private readonly Vector2 _defaultNoiseRange;
@@ -36,7 +36,7 @@ namespace Services
             return UniTask.CompletedTask;
         }
 
-        public async UniTask FadeInAsync(float duration = 0.5f)
+        public async UniTask ShowAsync(float duration = 0.5F)
         {
             _audioEffectsService?.PlayTvNoise();
 
@@ -50,7 +50,7 @@ namespace Services
             }
         }
 
-        public async UniTask FadeOutAsync(float duration = 0.5f)
+        public async UniTask HideAsync(float duration = 0.5F)
         {
             if (_tvNoiseMaterial != null)
             {

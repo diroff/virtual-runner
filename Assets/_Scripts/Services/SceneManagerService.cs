@@ -1,3 +1,4 @@
+
 using System;
 using Abstractions.Interfaces;
 using Cysharp.Threading.Tasks;
@@ -9,10 +10,10 @@ namespace Services
     public class SceneManagerService : IService
     {
         private readonly string _menuSceneName;
-        private readonly LoadingScreenService _loadingScreenService;
+        private readonly ILoadingScreenService _loadingScreenService;
         private bool _isLoading;
 
-        public SceneManagerService(string menuSceneName, LoadingScreenService loadingScreenService)
+        public SceneManagerService(string menuSceneName, ILoadingScreenService loadingScreenService)
         {
             _menuSceneName = menuSceneName;
             _loadingScreenService = loadingScreenService;
@@ -45,14 +46,14 @@ namespace Services
 
         private async UniTask LoadSceneInternalAsync(Func<AsyncOperation> loadAction, float fadeDuration)
         {
-            if (_isLoading) 
+            if (_isLoading)
                 return;
 
             _isLoading = true;
 
             try
             {
-                await _loadingScreenService.FadeInAsync(fadeDuration);
+                await _loadingScreenService.ShowAsync(fadeDuration);
 
                 var loadOperation = loadAction();
                 loadOperation.allowSceneActivation = true;
@@ -64,7 +65,7 @@ namespace Services
 
                 await UniTask.Yield(PlayerLoopTiming.Update);
 
-                await _loadingScreenService.FadeOutAsync(fadeDuration);
+                await _loadingScreenService.HideAsync(fadeDuration);
             }
             finally
             {
