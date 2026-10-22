@@ -119,6 +119,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &9754342 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 270519200205191927, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
+  m_PrefabInstance: {fileID: 1147140272}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &177192835
 GameObject:
   m_ObjectHideFlags: 0
@@ -459,7 +464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 644f03cb506d3294ba783043ed1c1a17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tests.TransformMovementDebug
-  _movement: {fileID: 574549221}
+  _movement: {fileID: 1132823584}
 --- !u!1 &393676245
 GameObject:
   m_ObjectHideFlags: 0
@@ -960,133 +965,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 567390057}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &574549215
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 574549216}
-  - component: {fileID: 574549217}
-  - component: {fileID: 574549219}
-  - component: {fileID: 574549221}
-  - component: {fileID: 574549220}
-  m_Layer: 0
-  m_Name: PlayerRoot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &574549216
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 574549215}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.18, y: 0, z: -6.26}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1132823578}
-  m_Father: {fileID: 883581077}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &574549217
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 574549215}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5e73a5b46786ef419ce76b9e43eec62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Components.Movement.MovementSpeed
-  _baseSpeed: 3
-  OnSpeedChanged:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &574549219
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 574549215}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87cffd9174afeba42b08d1add1762790, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Mechanics.Movement.ArmSwingAcceleration
-  _leftHandVelocity: {fileID: 1887312269}
-  _rightHandVelocity: {fileID: 1359636890}
-  _movementSpeed: {fileID: 574549217}
-  _minimumHandSpeed: 0.5
-  _maximumHandSpeed: 5
-  _maximumAdditionalSpeed: 5
-  OnAdditionalSpeedChanged:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!143 &574549220
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 574549215}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 1.36144
-  m_Radius: 0.1
-  m_SlopeLimit: 45
-  m_StepOffset: 0.5
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.76072, z: 0}
---- !u!114 &574549221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 574549215}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f68e2c47be03844fae93f393a9970f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Components.Movement.CharacterControllerMovement
-  _movementSpeed: {fileID: 574549217}
-  _directionReference: {fileID: 0}
-  _direction: {x: 0, y: 0, z: 1}
-  OnMovementStarted:
-    m_PersistentCalls:
-      m_Calls: []
-  OnMovementStopped:
-    m_PersistentCalls:
-      m_Calls: []
-  _characterController: {fileID: 574549220}
-  _gravity: -9.81
-  _groundedStickForce: 2
-  _trackedHead: {fileID: 1942148244}
-  _fitCapsuleToHead: 1
-  _headClearance: 0.2
-  _minimumHeight: 0.8
-  _maximumHeight: 2.2
 --- !u!1 &583786973
 GameObject:
   m_ObjectHideFlags: 0
@@ -1470,7 +1348,7 @@ Transform:
   m_Children:
   - {fileID: 393676247}
   - {fileID: 1401859985}
-  - {fileID: 574549216}
+  - {fileID: 1132823578}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &888074441
@@ -1592,13 +1470,77 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 270519200205191924, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
   m_PrefabInstance: {fileID: 1147140272}
   m_PrefabAsset: {fileID: 0}
+--- !u!143 &1132823583 stripped
+CharacterController:
+  m_CorrespondingSourceObject: {fileID: 4785459082176657472, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
+  m_PrefabInstance: {fileID: 1147140272}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1132823584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9754342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f68e2c47be03844fae93f393a9970f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Components.Movement.CharacterControllerMovement
+  _movementSpeed: {fileID: 1132823586}
+  _directionReference: {fileID: 0}
+  _direction: {x: 0, y: 0, z: 1}
+  OnMovementStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnMovementStopped:
+    m_PersistentCalls:
+      m_Calls: []
+  _characterController: {fileID: 1132823583}
+--- !u!114 &1132823585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9754342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87cffd9174afeba42b08d1add1762790, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Mechanics.Movement.ArmSwingAcceleration
+  _leftHandVelocity: {fileID: 1887312269}
+  _rightHandVelocity: {fileID: 1359636890}
+  _movementSpeed: {fileID: 1132823586}
+  _minimumHandSpeed: 0.5
+  _maximumHandSpeed: 5
+  _maximumAdditionalSpeed: 5
+  OnAdditionalSpeedChanged:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1132823586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9754342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e73a5b46786ef419ce76b9e43eec62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Components.Movement.MovementSpeed
+  _baseSpeed: 3
+  OnSpeedChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1147140272
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 574549216}
+    m_TransformParent: {fileID: 883581077}
     m_Modifications:
     - target: {fileID: 31822447883457722, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
       propertyPath: m_IsActive
@@ -1606,7 +1548,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 270519200205191924, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -5.18
       objectReference: {fileID: 0}
     - target: {fileID: 270519200205191924, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1614,7 +1556,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 270519200205191924, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -6.26
       objectReference: {fileID: 0}
     - target: {fileID: 270519200205191924, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1925,6 +1867,15 @@ PrefabInstance:
     - {fileID: 6984589746619451559, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 270519200205191927, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1132823586}
+    - targetCorrespondingSourceObject: {fileID: 270519200205191927, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1132823585}
+    - targetCorrespondingSourceObject: {fileID: 270519200205191927, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1132823584}
     - targetCorrespondingSourceObject: {fileID: 1447473341989487573, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
       insertIndex: 1
       addedObject: {fileID: 1887312269}
