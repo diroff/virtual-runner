@@ -46,6 +46,12 @@ namespace Abstractions.Components.Zone
             }
         }
 
+        public void ResetRuntimeState()
+        {
+            _hasTriggered = false;
+            StayTimers.Clear();
+        }
+
         protected void HandleEnter(TCollider other)
         {
             if (!IsValid(other))

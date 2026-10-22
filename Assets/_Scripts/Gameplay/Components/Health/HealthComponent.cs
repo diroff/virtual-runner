@@ -21,17 +21,16 @@ namespace Abstractions.Components
 
         private void Awake()
         {
-            Initialize();
+            ResetHealth();
         }
 
-        private void Initialize()
+        public void ResetHealth()
         {
             MaxHealth = _baseHealth;
             CurrentHealth = MaxHealth;
+            IsDead = false;
 
             OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
-
-            IsDead = false;
         }
 
         public void Damage(float value, GameObject sender)
