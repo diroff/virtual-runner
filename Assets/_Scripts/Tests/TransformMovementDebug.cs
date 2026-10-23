@@ -1,4 +1,7 @@
 using Abstractions.Components.Movement;
+using Cysharp.Threading.Tasks;
+using Gameplay.Mechanics.LevelGeneration;
+using System;
 using UnityEngine;
 
 namespace Tests
@@ -6,6 +9,7 @@ namespace Tests
     public class TransformMovementDebug : MonoBehaviour
     {
         [SerializeField] private MovementBase _movement;
+        [SerializeField] private LevelSegmentSpawner _levelSpawner;
 
         private void Start()
         {
@@ -15,6 +19,7 @@ namespace Tests
                 return;
             }
 
+            _levelSpawner.StartRunAsync().Forget();
             _movement.StartMovement();
         }
 
