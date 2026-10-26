@@ -1,5 +1,6 @@
 using Abstractions.Interfaces;
 using Gameplay.Components.Movement;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,6 +17,7 @@ namespace Abstractions.Components.Movement
 
         public UnityEvent OnMovementStarted = new();
         public UnityEvent OnMovementStopped = new();
+        public event Action<float> OnDistanceMoved;
 
         protected MovementSpeed Speed => _movementSpeed;
 
@@ -23,6 +25,11 @@ namespace Abstractions.Components.Movement
         {
             if (_movementSpeed == null)
                 _movementSpeed = GetComponent<MovementSpeed>();
+        }
+
+        protected virtual void OnDisable()
+        {
+            StopMovement();
         }
 
         protected virtual void Update()
@@ -35,6 +42,9 @@ namespace Abstractions.Components.Movement
             Vector3 displacement = IsMoving ? GetDirection() * _movementSpeed.CurrentSpeed * deltaTime : Vector3.zero;
 
             ApplyMovement(displacement, deltaTime);
+
+            if (IsMoving && displacement.sqrMagnitude > 0f)
+                OnDistanceMoved?.Invoke(displacement.magnitude);
         }
 
         protected abstract bool IsConfigured { get; }
@@ -82,11 +92,6 @@ namespace Abstractions.Components.Movement
         public void SetDirectionReference(Transform reference)
         {
             _directionReference = reference;
-        }
-
-        protected virtual void OnDisable()
-        {
-            StopMovement();
         }
 
         private Vector3 GetDirection()
