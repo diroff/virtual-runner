@@ -72,6 +72,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Mechanics.Collectables.Coin
   _interactionZone: {fileID: 3134109196623603797}
+  <Value>k__BackingField: 1
 --- !u!114 &3134109196623603797
 MonoBehaviour:
   m_ObjectHideFlags: 0

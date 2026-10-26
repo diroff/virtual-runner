@@ -1,5 +1,6 @@
 using Abstractions.Components.Movement;
 using Cysharp.Threading.Tasks;
+using Gameplay.Mechanics.Collectables;
 using Gameplay.Mechanics.LevelGeneration;
 using Gameplay.Mechanics.Scoring;
 using Gameplay.Models;
@@ -12,8 +13,10 @@ namespace Tests
         [SerializeField] private MovementBase _movement;
         [SerializeField] private LevelSegmentSpawner _levelSpawner;
         [SerializeField] private DistanceScoreTracker _distanceScoreTracker;
+        [SerializeField] private CoinCollectionHandler _coinCollectionHandler;
 
         private Score _score;
+        private Wallet _wallet;
 
         private void Start()
         {
@@ -25,6 +28,11 @@ namespace Tests
 
             _score = new Score();
             _score.OnValueChanged += HandleScoreChanged;
+
+            _wallet = new Wallet();
+            _wallet.OnBalanceChanged += OnBalanceChanged;
+
+            _coinCollectionHandler.Initialize(_wallet);
 
             _distanceScoreTracker.Initialize(_score);
             _distanceScoreTracker.OnMultiplierChanged += HandleMultiplierChanged;
@@ -47,31 +55,42 @@ namespace Tests
 
             if (_movement != null)
                 _movement.StopMovement();
+        }
 
+        private void OnDestroy()
+        {
             if (_score != null)
                 _score.OnValueChanged -= HandleScoreChanged;
+
+            if(_wallet != null )
+                _wallet.OnBalanceChanged -= OnBalanceChanged;
+        }
+
+        private void OnBalanceChanged(long previous, long current)
+        {
+            Debug.Log($"Coin: {previous} -> {current}");
         }
 
         private void HandleScoreChanged(long previousValue, long currentValue)
         {
-            Debug.Log($"Score: {previousValue} -> {currentValue}");
+            //Debug.Log($"Score: {previousValue} -> {currentValue}");
         }
 
         private void HandleMultiplierChanged(float multiplier)
         {
-            Debug.Log($"Score multiplier: x{multiplier}");
+           //Debug.Log($"Score multiplier: x{multiplier}");
         }
 
         [ContextMenu("Add")]
         public void AddMult()
         {
-            _distanceScoreTracker.AddMultiplier(1);
+            _coinCollectionHandler.AddMultiplier(1);
         }
 
         [ContextMenu("Remove")]
         public void RemoveMult()
         {
-            _distanceScoreTracker.RemoveMultiplier(1);
+            _coinCollectionHandler.RemoveMultiplier(1);
         }
     }
 }

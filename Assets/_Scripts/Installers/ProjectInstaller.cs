@@ -13,6 +13,10 @@ namespace Installers
 
         public void InstallBindings(ContainerBuilder builder)
         {
+            builder.RegisterType(typeof(WalletService),
+                new[] { typeof(IService) }, 
+                Lifetime.Singleton, Resolution.Lazy);
+
             builder.RegisterType(typeof(LoadingScreenStubService), 
                 new[] { typeof(ILoadingScreenService), typeof(IService) }, 
                 Lifetime.Singleton, Resolution.Lazy);
