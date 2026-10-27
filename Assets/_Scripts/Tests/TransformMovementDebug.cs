@@ -4,6 +4,7 @@ using Gameplay.Mechanics.Collectables;
 using Gameplay.Mechanics.LevelGeneration;
 using Gameplay.Mechanics.Scoring;
 using Gameplay.Models;
+using TMPro;
 using UnityEngine;
 
 namespace Tests
@@ -14,6 +15,9 @@ namespace Tests
         [SerializeField] private LevelSegmentSpawner _levelSpawner;
         [SerializeField] private DistanceScoreTracker _distanceScoreTracker;
         [SerializeField] private CoinCollectionHandler _coinCollectionHandler;
+
+        [SerializeField] private TMP_Text _scoreText;
+        [SerializeField] private TMP_Text _coinsText;
 
         private Score _score;
         private Wallet _wallet;
@@ -36,6 +40,9 @@ namespace Tests
 
             _distanceScoreTracker.Initialize(_score);
             _distanceScoreTracker.OnMultiplierChanged += HandleMultiplierChanged;
+
+            OnBalanceChanged(_wallet.Balance, _wallet.Balance);
+            HandleScoreChanged(_score.Value, _score.Value);
 
             _levelSpawner.StartRunAsync().Forget();
 
@@ -68,11 +75,13 @@ namespace Tests
 
         private void OnBalanceChanged(long previous, long current)
         {
-            Debug.Log($"Coin: {previous} -> {current}");
+            _coinsText.text = "Coins: " + current;
+            //Debug.Log($"Coin: {previous} -> {current}");
         }
 
         private void HandleScoreChanged(long previousValue, long currentValue)
         {
+            _scoreText.text = "Score: " + currentValue;
             //Debug.Log($"Score: {previousValue} -> {currentValue}");
         }
 
