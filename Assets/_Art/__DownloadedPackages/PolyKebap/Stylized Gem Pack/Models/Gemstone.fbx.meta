@@ -1,7 +1,14 @@
 fileFormatVersion: 2
 guid: 5c81387949366c641850d65d5ef89a76
+AssetOrigin:
+  serializedVersion: 1
+  productId: 340664
+  packageName: "Low Poly Gemstone Pack \u2013 Stylized Crystals & Jewels"
+  packageVersion: 1.0
+  assetPath: Assets/_Art/__Packages/PolyKebap/Stylized Gem Pack/Models/Gemstone.fbx
+  uploadId: 807372
 ModelImporter:
-  serializedVersion: 22200
+  serializedVersion: 24200
   internalIDToNameTable: []
   externalObjects: {}
   materials:
@@ -56,6 +63,9 @@ ModelImporter:
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
     optimizeBones: 1
+    generateMeshLods: 1
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
@@ -105,10 +115,3 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 340664
-  packageName: "Low Poly Gemstone Pack \u2013 Stylized Crystals & Jewels"
-  packageVersion: 1.0
-  assetPath: Assets/_Art/__Packages/PolyKebap/Stylized Gem Pack/Models/Gemstone.fbx
-  uploadId: 807372
