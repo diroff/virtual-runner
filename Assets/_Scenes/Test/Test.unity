@@ -2698,7 +2698,9 @@ MonoBehaviour:
   _startSegmentPrefab: {fileID: 5831274277005636497, guid: 721e90eabf712d74cb353a9ee75c09a9, type: 3}
   _segmentPrefabs:
   - {fileID: 3846775970005291678, guid: b050d08a7fc3f3a479be27e3093acc45, type: 3}
-  - {fileID: 3846775970005291678, guid: b050d08a7fc3f3a479be27e3093acc45, type: 3}
+  - {fileID: 7242963150958277543, guid: a01d1e5e4f2f6994c89bfa70e6de4035, type: 3}
+  - {fileID: 7660367651904799905, guid: 36035297676fff44b84c922ecfd4bf4b, type: 3}
+  - {fileID: 5229903489061906510, guid: 21e8ed944ceab7e4eb684103f9a92336, type: 3}
   _preloadCountPerPrefab: 2
   _preloadBatchSize: 2
   _spawnAheadDistance: 67
