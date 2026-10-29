@@ -2701,6 +2701,8 @@ MonoBehaviour:
   - {fileID: 7242963150958277543, guid: a01d1e5e4f2f6994c89bfa70e6de4035, type: 3}
   - {fileID: 7660367651904799905, guid: 36035297676fff44b84c922ecfd4bf4b, type: 3}
   - {fileID: 5229903489061906510, guid: 21e8ed944ceab7e4eb684103f9a92336, type: 3}
+  - {fileID: 1798326980255669395, guid: 81fa90ce49b28514681b2380ad0eac1b, type: 3}
+  - {fileID: 6924463521828365797, guid: 9c7c687abf0ff1642b5abb1919348524, type: 3}
   _preloadCountPerPrefab: 2
   _preloadBatchSize: 2
   _spawnAheadDistance: 67
