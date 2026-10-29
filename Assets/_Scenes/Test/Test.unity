@@ -2695,7 +2695,7 @@ MonoBehaviour:
   _poolService: {fileID: 345899037}
   _playerRoot: {fileID: 1132823578}
   _spawnOrigin: {fileID: 1418122176}
-  _startSegmentPrefab: {fileID: 3846775970005291678, guid: b050d08a7fc3f3a479be27e3093acc45, type: 3}
+  _startSegmentPrefab: {fileID: 5831274277005636497, guid: 721e90eabf712d74cb353a9ee75c09a9, type: 3}
   _segmentPrefabs:
   - {fileID: 3846775970005291678, guid: b050d08a7fc3f3a479be27e3093acc45, type: 3}
   - {fileID: 3846775970005291678, guid: b050d08a7fc3f3a479be27e3093acc45, type: 3}
