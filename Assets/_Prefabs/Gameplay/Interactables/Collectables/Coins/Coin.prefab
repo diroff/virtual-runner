@@ -65,7 +65,7 @@ MonoBehaviour:
   _duration: 2.75
   _ease: 1
   _rotateMode: 1
-  _loopType: 1
+  _loopType: 2
   _loops: -1
 --- !u!1001 &5612460826723896968
 PrefabInstance:
@@ -77,15 +77,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 7fa93266725d152428ae93262ef20bcf, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7fa93266725d152428ae93262ef20bcf, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7fa93266725d152428ae93262ef20bcf, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7fa93266725d152428ae93262ef20bcf, type: 3}
       propertyPath: m_LocalPosition.x

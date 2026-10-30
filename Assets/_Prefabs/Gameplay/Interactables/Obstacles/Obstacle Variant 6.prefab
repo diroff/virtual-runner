@@ -79,7 +79,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2526352004690225882, guid: bc94319e641f67c4d82eaa696aeeb4fc, type: 3}
       propertyPath: m_Size.x
-      value: 0.8646444
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 2526352004690225882, guid: bc94319e641f67c4d82eaa696aeeb4fc, type: 3}
       propertyPath: m_Size.y
@@ -87,7 +87,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2526352004690225882, guid: bc94319e641f67c4d82eaa696aeeb4fc, type: 3}
       propertyPath: m_Size.z
-      value: 0.12737206
+      value: 0.11559275
       objectReference: {fileID: 0}
     - target: {fileID: 2526352004690225882, guid: bc94319e641f67c4d82eaa696aeeb4fc, type: 3}
       propertyPath: m_Center.x
@@ -99,11 +99,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2526352004690225882, guid: bc94319e641f67c4d82eaa696aeeb4fc, type: 3}
       propertyPath: m_Center.z
-      value: 0.0020214468
+      value: 0.007911101
       objectReference: {fileID: 0}
     - target: {fileID: 2802247253809084659, guid: bc94319e641f67c4d82eaa696aeeb4fc, type: 3}
       propertyPath: m_Name
       value: Obstacle Variant 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8144348021580454217, guid: bc94319e641f67c4d82eaa696aeeb4fc, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8144348021580454217, guid: bc94319e641f67c4d82eaa696aeeb4fc, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8144348021580454217, guid: bc94319e641f67c4d82eaa696aeeb4fc, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8144348021580454217, guid: bc94319e641f67c4d82eaa696aeeb4fc, type: 3}
       propertyPath: m_LocalPosition.x

@@ -13,6 +13,18 @@ PrefabInstance:
       value: Obstacle Variant 13
       objectReference: {fileID: 0}
     - target: {fileID: 8189451280409243418, guid: 72217e7dbbb26bb428ff0116befc3afa, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8189451280409243418, guid: 72217e7dbbb26bb428ff0116befc3afa, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8189451280409243418, guid: 72217e7dbbb26bb428ff0116befc3afa, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8189451280409243418, guid: 72217e7dbbb26bb428ff0116befc3afa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
