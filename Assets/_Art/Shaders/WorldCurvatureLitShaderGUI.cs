@@ -43,6 +43,7 @@ namespace EditorTools
 
             DrawProperty(materialEditor, properties, "_CastShadows", "Cast Shadows");
             DrawProperty(materialEditor, properties, "_ReceiveShadows", "Receive Shadows");
+            DrawProperty(materialEditor, properties, "_ColorMode", "Color Mode");
 
             EditorGUILayout.Space();
             EditorGUILayout.LabelField(SurfaceInputsLabel, EditorStyles.boldLabel);
@@ -215,6 +216,29 @@ namespace EditorTools
             SetKeyword(material, "_METALLICSPECGLOSSMAP", material.GetFloat("_UseMetallicMap") >= 0.5f);
             SetKeyword(material, "_OCCLUSIONMAP", material.GetFloat("_UseOcclusionMap") >= 0.5f);
             SetKeyword(material, "_EMISSION", material.GetFloat("_EmissionEnabled") >= 0.5f);
+
+            int colorMode = Mathf.RoundToInt(material.GetFloat("_ColorMode"));
+            SetKeyword(material, "_COLOROVERLAY_ON", colorMode == 3);
+            SetKeyword(material, "_COLORCOLOR_ON", colorMode == 4);
+            SetKeyword(material, "_COLORADDSUBDIFF_ON", colorMode == 1 || colorMode == 2 || colorMode == 5);
+
+            Vector4 colorAddSubDiff = Vector4.zero;
+            switch (colorMode)
+            {
+                case 1: // Additive
+                    colorAddSubDiff.x = 1f;
+                    break;
+                case 2: // Subtractive
+                    colorAddSubDiff.x = -1f;
+                    break;
+                case 5: // Difference
+                    colorAddSubDiff.x = -1f;
+                    colorAddSubDiff.y = 1f;
+                    break;
+            }
+
+            if (material.GetVector("_ColorAddSubDiff") != colorAddSubDiff)
+                material.SetVector("_ColorAddSubDiff", colorAddSubDiff);
 
             material.SetOverrideTag("RenderType", transparent ? "Transparent" : alphaClip ? "TransparentCutout" : string.Empty);
 

@@ -7,6 +7,7 @@ Shader "VirtualRunner/VR World Curvature Lit"
 
         [Enum(Opaque, 0, Transparent, 1)] _Surface("Surface Type", Float) = 0
         [Enum(Alpha, 0, Premultiply, 1, Additive, 2, Multiply, 3)] _Blend("Blending Mode", Float) = 0
+        [Enum(Multiply, 0, Additive, 1, Subtractive, 2, Overlay, 3, Color, 4, Difference, 5)] _ColorMode("Color Mode", Float) = 0
         [ToggleUI] _PreserveSpecularLighting("Preserve Specular Lighting", Float) = 0
         [Enum(Front, 2, Back, 1, Both, 0)] _Cull("Render Face", Float) = 2
         [ToggleUI] _CastShadows("Cast Shadows", Float) = 1
@@ -38,6 +39,7 @@ Shader "VirtualRunner/VR World Curvature Lit"
         [HideInInspector] _DstBlendAlpha("__dstA", Float) = 0
         [HideInInspector] _ZWrite("__zw", Float) = 1
         [HideInInspector] _BlendModePreserveSpecular("_BlendModePreserveSpecular", Float) = 0
+        [HideInInspector] _ColorAddSubDiff("__coloraddsubdiff", Vector) = (0, 0, 0, 0)
         [HideInInspector] _QueueOffset("Queue offset", Float) = 0
     }
 
@@ -57,6 +59,7 @@ Shader "VirtualRunner/VR World Curvature Lit"
         #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
         #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
         #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
+        #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
         CBUFFER_START(UnityPerMaterial)
             float4 _BaseMap_ST;
@@ -70,6 +73,7 @@ Shader "VirtualRunner/VR World Curvature Lit"
             half _Surface;
             half _Blend;
             half _PreserveSpecularLighting;
+            half4 _ColorAddSubDiff;
         CBUFFER_END
 
         TEXTURE2D(_MetallicGlossMap);
@@ -202,11 +206,39 @@ float3 VRApplyWorldCurveTangent(float3 originalPositionWS, float3 tangentWS)
     return normalize(tangentWS);
 }
 
+        // Matches the Color Mode blending used by URP Particles Lit.
+        half4 VRMixVertexColor(half4 baseColor, half4 vertexColor)
+        {
+            #if defined(_COLOROVERLAY_ON)
+                half4 result = baseColor;
+                result.rgb = lerp(
+                    1.0h - 2.0h * (1.0h - baseColor.rgb) * (1.0h - vertexColor.rgb),
+                    2.0h * baseColor.rgb * vertexColor.rgb,
+                    step(baseColor.rgb, 0.5h));
+                result.a *= vertexColor.a;
+                return result;
+            #elif defined(_COLORCOLOR_ON)
+                half3 baseHSV = RgbToHsv(baseColor.rgb);
+                half3 vertexHSV = RgbToHsv(vertexColor.rgb);
+                return half4(HsvToRgb(half3(vertexHSV.x, vertexHSV.y, baseHSV.z)),
+                    baseColor.a * vertexColor.a);
+            #elif defined(_COLORADDSUBDIFF_ON)
+                half4 result = baseColor;
+                result.rgb = baseColor.rgb + vertexColor.rgb * _ColorAddSubDiff.x;
+                result.rgb = lerp(result.rgb, abs(result.rgb), _ColorAddSubDiff.y);
+                result.a *= vertexColor.a;
+                return result;
+            #else
+                return baseColor * vertexColor;
+            #endif
+        }
+
         struct CurvedAttributes
         {
             float4 positionOS : POSITION;
             float3 normalOS : NORMAL;
             float4 tangentOS : TANGENT;
+            half4 color : COLOR;
             float2 texcoord : TEXCOORD0;
             float2 staticLightmapUV : TEXCOORD1;
             float2 dynamicLightmapUV : TEXCOORD2;
@@ -215,6 +247,7 @@ float3 VRApplyWorldCurveTangent(float3 originalPositionWS, float3 tangentWS)
 
         struct CurvedVaryings
         {
+            half4 color : COLOR;
             float2 uv : TEXCOORD0;
             float3 positionWS : TEXCOORD1;
             half3 normalWS : TEXCOORD2;
@@ -246,6 +279,7 @@ float3 VRApplyWorldCurveTangent(float3 originalPositionWS, float3 tangentWS)
             output.positionWS = positionWS;
             output.positionCS = TransformWorldToHClip(positionWS);
             output.uv = TRANSFORM_TEX(input.texcoord, _BaseMap);
+            output.color = input.color;
             output.normalWS = normalWS;
             #if defined(_NORMALMAP)
                 float3 tangentWS = VRApplyWorldCurveTangent(originalPositionWS, normalInputs.tangentWS);
@@ -305,9 +339,10 @@ float3 VRApplyWorldCurveTangent(float3 originalPositionWS, float3 tangentWS)
             UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
 
             half4 albedoAlpha = SampleAlbedoAlpha(input.uv, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
+            half4 blendedColor = VRMixVertexColor(albedoAlpha * _BaseColor, input.color);
             SurfaceData surfaceData = (SurfaceData)0;
-            surfaceData.alpha = Alpha(albedoAlpha.a, _BaseColor, _Cutoff);
-            surfaceData.albedo = albedoAlpha.rgb * _BaseColor.rgb;
+            surfaceData.alpha = Alpha(blendedColor.a, half4(1.0h, 1.0h, 1.0h, 1.0h), _Cutoff);
+            surfaceData.albedo = blendedColor.rgb;
             surfaceData.specular = half3(0.0, 0.0, 0.0);
 
             #if defined(_METALLICSPECGLOSSMAP)
@@ -358,6 +393,7 @@ float3 VRApplyWorldCurveTangent(float3 originalPositionWS, float3 tangentWS)
 
         struct CurvedDepthVaryings
         {
+            half alpha : TEXCOORD1;
             float2 uv : TEXCOORD0;
             float4 positionCS : SV_POSITION;
             UNITY_VERTEX_INPUT_INSTANCE_ID
@@ -374,6 +410,7 @@ float3 VRApplyWorldCurveTangent(float3 originalPositionWS, float3 tangentWS)
             positionWS = VRApplyWorldCurve(positionWS);
             output.positionCS = TransformWorldToHClip(positionWS);
             output.uv = TRANSFORM_TEX(input.texcoord, _BaseMap);
+            output.alpha = input.color.a;
             return output;
         }
 
@@ -382,13 +419,14 @@ float3 VRApplyWorldCurveTangent(float3 originalPositionWS, float3 tangentWS)
             UNITY_SETUP_INSTANCE_ID(input);
             UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
             #if defined(_ALPHATEST_ON)
-                Alpha(SampleAlbedoAlpha(input.uv, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap)).a, _BaseColor, _Cutoff);
+                Alpha(SampleAlbedoAlpha(input.uv, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap)).a * input.alpha, _BaseColor, _Cutoff);
             #endif
             return 0;
         }
 
         struct CurvedDepthNormalsVaryings
         {
+            half alpha : TEXCOORD4;
             float2 uv : TEXCOORD0;
             float3 positionWS : TEXCOORD1;
             half3 normalWS : TEXCOORD2;
@@ -420,6 +458,7 @@ float3 VRApplyWorldCurveTangent(float3 originalPositionWS, float3 tangentWS)
                 output.tangentWS = half4(1.0h, 0.0h, 0.0h, input.tangentOS.w * GetOddNegativeScale());
             #endif
             output.uv = TRANSFORM_TEX(input.texcoord, _BaseMap);
+            output.alpha = input.color.a;
             return output;
         }
 
@@ -429,7 +468,7 @@ float3 VRApplyWorldCurveTangent(float3 originalPositionWS, float3 tangentWS)
             UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
 
             #if defined(_ALPHATEST_ON)
-                Alpha(SampleAlbedoAlpha(input.uv, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap)).a, _BaseColor, _Cutoff);
+                Alpha(SampleAlbedoAlpha(input.uv, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap)).a * input.alpha, _BaseColor, _Cutoff);
             #endif
 
             #if defined(_NORMALMAP)
@@ -468,6 +507,7 @@ float3 VRApplyWorldCurveTangent(float3 originalPositionWS, float3 tangentWS)
             #pragma shader_feature_local_fragment _EMISSION
             #pragma shader_feature_local_fragment _METALLICSPECGLOSSMAP
             #pragma shader_feature_local_fragment _OCCLUSIONMAP
+            #pragma shader_feature_local_fragment _ _COLOROVERLAY_ON _COLORCOLOR_ON _COLORADDSUBDIFF_ON
 
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
             #pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
@@ -518,6 +558,7 @@ float3 VRApplyWorldCurveTangent(float3 originalPositionWS, float3 tangentWS)
             {
                 #if defined(_ALPHATEST_ON)
                     float2 uv : TEXCOORD0;
+                    half alpha : TEXCOORD1;
                 #endif
                 float4 positionCS : SV_POSITION;
                 UNITY_VERTEX_INPUT_INSTANCE_ID
@@ -530,6 +571,7 @@ float3 VRApplyWorldCurveTangent(float3 originalPositionWS, float3 tangentWS)
                 UNITY_TRANSFER_INSTANCE_ID(input, output);
                 #if defined(_ALPHATEST_ON)
                     output.uv = TRANSFORM_TEX(input.texcoord, _BaseMap);
+                    output.alpha = input.color.a;
                 #endif
 
                 float3 originalPositionWS = TransformObjectToWorld(input.positionOS.xyz);
@@ -553,7 +595,7 @@ float3 VRApplyWorldCurveTangent(float3 originalPositionWS, float3 tangentWS)
                     discard;
                 #endif
                 #if defined(_ALPHATEST_ON)
-                    Alpha(SampleAlbedoAlpha(input.uv, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap)).a, _BaseColor, _Cutoff);
+                    Alpha(SampleAlbedoAlpha(input.uv, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap)).a * input.alpha, _BaseColor, _Cutoff);
                 #endif
                 return 0;
             }
