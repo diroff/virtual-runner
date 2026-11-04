@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Data
 {
@@ -7,6 +8,7 @@ namespace Data
     {
         public ProgressData Progress = new();
         public SettingsData Settings = new();
+        public PowerUpProgressData PowerUps = new();
     }
 
     [Serializable]
@@ -20,5 +22,13 @@ namespace Data
     {
         public float MusicVolume = 1f;
         public float SfxVolume = 1f;
+    }
+}
+namespace Data
+{
+    [Serializable]
+    public class PowerUpProgressData
+    {
+        public Dictionary<string, int> Levels = new();
     }
 }

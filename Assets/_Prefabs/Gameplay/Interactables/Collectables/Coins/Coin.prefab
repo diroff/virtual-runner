@@ -172,6 +172,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7fa93266725d152428ae93262ef20bcf, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7657452855076627513}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7fa93266725d152428ae93262ef20bcf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2329835834493641624}
   m_SourcePrefab: {fileID: 100100000, guid: 7fa93266725d152428ae93262ef20bcf, type: 3}
 --- !u!1 &4693347516368909273 stripped
 GameObject:
@@ -267,6 +270,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2329835834493641624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4693347516368909273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fd14f7e415d4574289036026bbe9e66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Mechanics.PowerUps.Magnet.MagnetAttractable
+  _interactable: {fileID: -2323687062639347825}
 --- !u!4 &5362043467022281059 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7fa93266725d152428ae93262ef20bcf, type: 3}

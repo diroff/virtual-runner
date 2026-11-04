@@ -14,6 +14,8 @@ namespace Gameplay.Mechanics.Collectables
 
         private readonly HashSet<CoinCollector> _registeredCollectors = new();
         private Wallet _sessionWallet;
+        private readonly Dictionary<UnityEngine.Object, float> _multiplierContributions = new();
+        private float _baseMultiplier;
 
         public float Multiplier => _multiplier;
         public IReadOnlyCollection<CoinCollector> Collectors => _registeredCollectors;
@@ -26,6 +28,11 @@ namespace Gameplay.Mechanics.Collectables
         public void Initialize(Wallet sessionWallet)
         {
             _sessionWallet = sessionWallet ?? throw new ArgumentNullException(nameof(sessionWallet));
+        }
+
+        private void Awake()
+        {
+            _baseMultiplier = _multiplier;
         }
 
         private void OnEnable()
@@ -77,11 +84,8 @@ namespace Gameplay.Mechanics.Collectables
             if (float.IsNaN(multiplier) || float.IsInfinity(multiplier) || multiplier <= 0f)
                 return;
 
-            if (Mathf.Approximately(_multiplier, multiplier))
-                return;
-
-            _multiplier = multiplier;
-            OnMultiplierChanged?.Invoke(_multiplier);
+            _baseMultiplier = multiplier;
+            RecalculateMultiplier();
         }
 
         public void AddMultiplier(float amount)
@@ -89,7 +93,7 @@ namespace Gameplay.Mechanics.Collectables
             if (float.IsNaN(amount) || float.IsInfinity(amount) || amount <= 0f)
                 return;
 
-            SetMultiplier(_multiplier + amount);
+            SetMultiplier(_baseMultiplier + amount);
         }
 
         public void RemoveMultiplier(float amount)
@@ -97,7 +101,35 @@ namespace Gameplay.Mechanics.Collectables
             if (float.IsNaN(amount) || float.IsInfinity(amount) || amount <= 0f)
                 return;
 
-            SetMultiplier(_multiplier - amount);
+            SetMultiplier(_baseMultiplier - amount);
+        }
+
+        public void SetMultiplierContribution(UnityEngine.Object source, float amount)
+        {
+            if (source == null || float.IsNaN(amount) || float.IsInfinity(amount) || amount <= 0f)
+                return;
+
+            _multiplierContributions[source] = amount;
+            RecalculateMultiplier();
+        }
+
+        public void RemoveMultiplierContribution(UnityEngine.Object source)
+        {
+            if (source != null && _multiplierContributions.Remove(source))
+                RecalculateMultiplier();
+        }
+
+        private void RecalculateMultiplier()
+        {
+            float result = _baseMultiplier;
+            foreach (float value in _multiplierContributions.Values)
+                result *= value;
+
+            if (Mathf.Approximately(result, _multiplier))
+                return;
+
+            _multiplier = result;
+            OnMultiplierChanged?.Invoke(_multiplier);
         }
 
         private void HandleCoinCollected(Coin coin)

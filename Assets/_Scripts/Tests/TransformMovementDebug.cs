@@ -2,6 +2,7 @@ using Abstractions.Components.Movement;
 using Cysharp.Threading.Tasks;
 using Gameplay.Mechanics.Collectables;
 using Gameplay.Mechanics.LevelGeneration;
+using Gameplay.Mechanics.PowerUps;
 using Gameplay.Mechanics.Scoring;
 using Gameplay.Models;
 using TMPro;
@@ -15,6 +16,8 @@ namespace Tests
         [SerializeField] private LevelSegmentSpawner _levelSpawner;
         [SerializeField] private DistanceScoreTracker _distanceScoreTracker;
         [SerializeField] private CoinCollectionHandler _coinCollectionHandler;
+        [SerializeField] private PowerUpContext _powerUpContext;
+        [SerializeField] private PowerUpHandler _powerUpHandler;
 
         [SerializeField] private TMP_Text _scoreText;
         [SerializeField] private TMP_Text _coinsText;
@@ -41,6 +44,12 @@ namespace Tests
             _distanceScoreTracker.Initialize(_score);
             _distanceScoreTracker.OnMultiplierChanged += HandleMultiplierChanged;
 
+            _powerUpContext.Initialize(_score);
+            _powerUpHandler.StartHandling();
+
+            _powerUpHandler.OnStarted += OnPowerUpStarted;
+            _powerUpHandler.OnEnded += OnPowerUpEnded;
+
             OnBalanceChanged(_wallet.Balance, _wallet.Balance);
             HandleScoreChanged(_score.Value, _score.Value);
 
@@ -50,6 +59,16 @@ namespace Tests
                 return;
 
             _distanceScoreTracker.StartScoring();
+        }
+
+        private void OnPowerUpStarted(PowerUpBase powerUp)
+        {
+            Debug.Log($"{powerUp.Definition.Id} started");
+        }
+
+        private void OnPowerUpEnded(PowerUpBase powerUp)
+        {
+            Debug.Log($"{powerUp.Definition.Id} ended");
         }
 
         private void OnDisable()
@@ -76,7 +95,7 @@ namespace Tests
         private void OnBalanceChanged(long previous, long current)
         {
             _coinsText.text = "Coins: " + current;
-            //Debug.Log($"Coin: {previous} -> {current}");
+            Debug.Log($"Coin: {previous} -> {current}");
         }
 
         private void HandleScoreChanged(long previousValue, long currentValue)

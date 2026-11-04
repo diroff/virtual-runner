@@ -19,8 +19,11 @@ namespace Abstractions.Components
         public UnityAction<GameObject, GameObject> OnDied;
         public UnityAction<GameObject> OnRevived;
 
+        private IDamageProtection[] _protections;
+
         private void Awake()
         {
+            _protections = GetComponentsInChildren<IDamageProtection>(true);
             ResetHealth();
         }
 
@@ -40,6 +43,11 @@ namespace Abstractions.Components
 
             if (value <= 0)
                 return;
+
+            foreach (IDamageProtection protection in _protections)
+                if (protection is Behaviour behaviour && behaviour.isActiveAndEnabled &&
+                    protection.TryPreventDamage(value, sender))
+                    return;
 
             CurrentHealth = Mathf.Clamp(CurrentHealth - value, 0, MaxHealth);
 
