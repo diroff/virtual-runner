@@ -156,8 +156,6 @@ namespace Gameplay.Mechanics.LevelGeneration
         {
             _startCancellation?.Cancel();
             _isRunning = false;
-
-            ReturnActiveSegments();
         }
 
         public void SetDifficulty(SegmentDifficulty difficulty)
@@ -276,7 +274,7 @@ namespace Gameplay.Mechanics.LevelGeneration
             return Vector3.Dot(_playerRoot.position - _runOriginPosition, _runForward);
         }
 
-        private void ReturnActiveSegments()
+        public void ReturnActiveSegments()
         {
             for (int i = _activeSegments.Count - 1; i >= 0; i--)
             {

@@ -95,10 +95,7 @@ namespace Gameplay.Mechanics.PowerUps
         public bool TryAcquire(PowerUpDefinition definition)
         {
             if (!CanAcquire(definition))
-            {
-                Debug.Log($"Can't acquire {definition}");
                 return false;
-            }
 
             PowerUpBase powerUp = _registered[definition];
             if (powerUp.IsRunning)
@@ -109,15 +106,11 @@ namespace Gameplay.Mechanics.PowerUps
             }
 
             if (!powerUp.StartPowerUp(_context, GetLevel(definition)))
-            {
-                Debug.Log($"Can't start power up");
                 return false;
-            }
 
             if (definition.Slot != PowerUpSlot.None)
                 _occupied.Add(definition.Slot, powerUp);
 
-            Debug.Log($"Acquire correct");
             OnStarted?.Invoke(powerUp);
             return true;
         }

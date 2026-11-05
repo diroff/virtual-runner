@@ -14,15 +14,12 @@ namespace Gameplay.Mechanics.PowerUps
                 return false;
 
             PowerUpHandler handler = interactor.GetComponentInParent<PowerUpHandler>();
-            Debug.Log(handler.name);
             return handler != null && handler.CanAcquire(_definition);
         }
 
         protected override void HandleInteraction(GameObject interactor)
         {
             PowerUpHandler handler = interactor.GetComponentInParent<PowerUpHandler>();
-
-            Debug.Log(handler.name);
 
             if (handler == null || !handler.TryAcquire(_definition))
                 return;
