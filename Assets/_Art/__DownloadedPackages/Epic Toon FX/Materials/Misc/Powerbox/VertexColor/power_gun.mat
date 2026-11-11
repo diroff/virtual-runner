@@ -21,19 +21,19 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: power_gun
-  m_Shader: {fileID: 4800000, guid: 77deb6b3dc189c04c85f43174a419324, type: 3}
+  m_Shader: {fileID: 4800000, guid: 98415b5b129c4edda59a1b4bfe24eb38, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _EMISSION
   - _NORMALMAP
-  m_InvalidKeywords:
-  - _FLIPBOOKBLENDING_OFF
+  m_InvalidKeywords: []
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 2000
-  stringTagMap: {}
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses:
   - ALWAYS
   m_LockedProperties: 
@@ -117,6 +117,7 @@ Material:
     - _Parallax: 0.02
     - _PreserveSpecularLighting: 0
     - _QueueOffset: 0
+    - _ReceiveFog: 0
     - _ReceiveShadows: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
@@ -137,7 +138,7 @@ Material:
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
-    - _EmissionColor: {r: 1.3180978, g: 0.07580891, b: 0, a: 1}
+    - _EmissionColor: {r: 1.7597642, g: 0.17175213, b: 0.07470694, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

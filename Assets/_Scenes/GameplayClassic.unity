@@ -463,6 +463,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8950117870773707747, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
+      propertyPath: _range
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 8957232180938327862, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
       propertyPath: _coinCollectionHandler
       value: 
@@ -702,6 +706,10 @@ PrefabInstance:
       propertyPath: '_coinCollectors.Array.data[2]'
       value: 
       objectReference: {fileID: 1359636898}
+    - target: {fileID: 8002954804226140848, guid: 23b4db5e025750348937dc9b46816c2a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8263541603857197441, guid: 23b4db5e025750348937dc9b46816c2a, type: 3}
       propertyPath: _reference
       value: 
