@@ -119,6 +119,52 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &68304299
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 68304300}
+  - component: {fileID: 68304301}
+  m_Layer: 0
+  m_Name: DifficultyDirector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &68304300
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68304299}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6308381505627480013}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &68304301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68304299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f093d47a10e24b19a8504fdf7eeb2d46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Mechanics.LevelGeneration.SegmentDifficultyDirector
+  _spawner: {fileID: 6308381505627480014}
+  _profile: {fileID: 11400000, guid: 041d2ceec0ea49038a94b1caff59e612, type: 2}
 --- !u!1 &393676245
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,6 +346,59 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &673109566
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 673109567}
+  - component: {fileID: 673109568}
+  m_Layer: 0
+  m_Name: PowerUpSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &673109567
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 673109566}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6308381505627480013}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &673109568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 673109566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd51ad741d944e42ad3161a225ae68e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Mechanics.LevelGeneration.LevelPowerUpSpawner
+  _segmentSpawner: {fileID: 6308381505627480014}
+  _poolService: {fileID: 6308381505627480015}
+  _profile: {fileID: 11400000, guid: 7dfa9fc120ca425aa91b751318eb1c25, type: 2}
+  _pickupPrefabs:
+  - {fileID: 3859099827146259220, guid: c7a9a69fda836a146866e919c26d0696, type: 3}
+  - {fileID: 6238931745733146117, guid: 4dde3529b9053484c840dd903e3303d9, type: 3}
+  - {fileID: 4323876858520311550, guid: 38a5515d047fc4d4790e4089ee92ee12, type: 3}
+  - {fileID: 2204096953194453436, guid: d2e11254c8ad4ac49aa5c7848d9e7860, type: 3}
+  _preloadCountPerPrefab: 1
 --- !u!1 &883581076
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,6 +561,14 @@ PrefabInstance:
     - target: {fileID: 270519200205191927, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1447473340538176298, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1447473341989487573, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8141891778842080228, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
       propertyPath: m_RequiresDepthTextureOption
@@ -720,9 +827,42 @@ PrefabInstance:
       objectReference: {fileID: 1132823578}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2120946918989291042, guid: 23b4db5e025750348937dc9b46816c2a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 68304300}
+    - targetCorrespondingSourceObject: {fileID: 2120946918989291042, guid: 23b4db5e025750348937dc9b46816c2a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 673109567}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23b4db5e025750348937dc9b46816c2a, type: 3}
+--- !u!4 &6308381505627480013 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2120946918989291042, guid: 23b4db5e025750348937dc9b46816c2a, type: 3}
+  m_PrefabInstance: {fileID: 6308381505627480012}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6308381505627480014 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 544604988709195225, guid: 23b4db5e025750348937dc9b46816c2a, type: 3}
+  m_PrefabInstance: {fileID: 6308381505627480012}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8964037c5f767b47ac12b54a974b16d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Mechanics.LevelGeneration.LevelSegmentSpawner
+--- !u!114 &6308381505627480015 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3917345758807360195, guid: 23b4db5e025750348937dc9b46816c2a, type: 3}
+  m_PrefabInstance: {fileID: 6308381505627480012}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac2dc872250ed7845b86e048d1b84c66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Services.PoolService
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -1,0 +1,45 @@
+using Data.LevelGeneration;
+using UnityEngine;
+
+namespace Gameplay.Mechanics.LevelGeneration
+{
+    public sealed class SegmentDifficultyDirector : MonoBehaviour
+    {
+        [SerializeField] private LevelSegmentSpawner _spawner;
+        [SerializeField] private SegmentDifficultyProfile _profile;
+
+        private readonly WeightedDifficultySelector _selector = new();
+
+        private void OnEnable()
+        {
+            if (_spawner == null)
+                return;
+
+            _spawner.OnRunStarted += ResetSelection;
+            _spawner.OnSegmentRequested += HandleSegmentRequested;
+            ResetSelection();
+        }
+
+        private void OnDisable()
+        {
+            if (_spawner == null)
+                return;
+
+            _spawner.OnRunStarted -= ResetSelection;
+            _spawner.OnSegmentRequested -= HandleSegmentRequested;
+        }
+
+        private void ResetSelection()
+        {
+            _selector.Reset();
+        }
+
+        private void HandleSegmentRequested(float startDistance)
+        {
+            if (_profile == null)
+                return;
+
+            _spawner.SetDifficulty(_selector.Next(_profile.Evaluate(startDistance)));
+        }
+    }
+}

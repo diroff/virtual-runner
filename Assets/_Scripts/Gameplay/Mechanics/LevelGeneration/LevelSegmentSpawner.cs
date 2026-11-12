@@ -83,6 +83,12 @@ namespace Gameplay.Mechanics.LevelGeneration
         private bool _isStarting;
         private bool _isRunning;
 
+        public event Action OnRunStarted;
+        public event Action OnRunStopped;
+        public event Action<float> OnSegmentRequested;
+        public event Action<LevelSegment, float> OnSegmentSpawned;
+        public event Action<LevelSegment> OnSegmentReturned;
+
         public bool IsRunning => _isRunning;
         public int ActiveSegmentCount => _activeSegments.Count;
         public SegmentDifficulty CurrentDifficulty => _currentDifficulty;
@@ -94,6 +100,8 @@ namespace Gameplay.Mechanics.LevelGeneration
 
             if (_isRunning)
                 StopRun();
+
+            ReturnActiveSegments();
 
             if (!ValidateSetup())
                 return;
@@ -121,10 +129,11 @@ namespace Gameplay.Mechanics.LevelGeneration
 
                 _playerDistance = GetPlayerDistance();
                 _isRunning = true;
+                OnRunStarted?.Invoke();
 
                 if (!SpawnSegment(_startSegmentPrefab, 0f, _currentDifficulty))
                 {
-                    _isRunning = false;
+                    StopRun();
                     return;
                 }
 
@@ -137,7 +146,7 @@ namespace Gameplay.Mechanics.LevelGeneration
             }
             catch
             {
-                _isRunning = false;
+                StopRun();
                 ReturnActiveSegments();
                 throw;
             }
@@ -155,7 +164,12 @@ namespace Gameplay.Mechanics.LevelGeneration
         public void StopRun()
         {
             _startCancellation?.Cancel();
+
+            if (!_isRunning)
+                return;
+
             _isRunning = false;
+            OnRunStopped?.Invoke();
         }
 
         public void SetDifficulty(SegmentDifficulty difficulty)
@@ -236,6 +250,7 @@ namespace Gameplay.Mechanics.LevelGeneration
                 return false;
 
             _activeSegments.Add(new ActiveSegment(instance, startDistance));
+            OnSegmentSpawned?.Invoke(instance, startDistance);
 
             return true;
         }
@@ -248,6 +263,7 @@ namespace Gameplay.Mechanics.LevelGeneration
             {
                 float startDistance = _activeSegments.Count == 0 ? 0f : _activeSegments[_activeSegments.Count - 1].EndDistance;
                 LevelSegment prefab = _segmentBag.Next(_availableSegmentPrefabs);
+                OnSegmentRequested?.Invoke(startDistance);
 
                 if (!SpawnSegment(prefab, startDistance, _currentDifficulty))
                     break;
@@ -259,6 +275,7 @@ namespace Gameplay.Mechanics.LevelGeneration
             while (_activeSegments.Count > 1 && _activeSegments[0].EndDistance < _playerDistance - _despawnBehindDistance)
             {
                 LevelSegment segment = _activeSegments[0].Segment;
+                OnSegmentReturned?.Invoke(segment);
 
                 if (_poolService != null)
                     _poolService.Return(segment);
@@ -282,6 +299,8 @@ namespace Gameplay.Mechanics.LevelGeneration
 
                 if (segment == null)
                     continue;
+
+                OnSegmentReturned?.Invoke(segment);
 
                 if (_poolService != null)
                     _poolService.Return(segment);
