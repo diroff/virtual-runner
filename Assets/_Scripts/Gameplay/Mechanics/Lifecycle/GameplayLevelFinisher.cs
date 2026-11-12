@@ -20,16 +20,8 @@ namespace Gameplay.Mechanics.Lifecycle
         [Inject] private CoinCollectionHandler _coinCollectionHandler;
         [Inject] private DistanceScoreTracker _distanceScoreTracker;
 
-        private PowerUpHandler _powerUpHandler;
-        private MovementBase _movement;
-
-        protected override void Awake()
-        {
-            base.Awake();
-
-            _movement = Player.GetComponentInChildren<MovementBase>();
-            _powerUpHandler = Player.GetComponentInChildren<PowerUpHandler>();
-        }
+        [Inject] private PowerUpHandler _powerUpHandler;
+        [Inject] private MovementBase _movement;
 
         protected override void OnBeforeFinish()
         {

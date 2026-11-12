@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Gameplay.Mechanics.Progression;
+using Reflex.Attributes;
 using Services;
 using UnityEngine;
 
@@ -50,8 +52,8 @@ namespace Gameplay.Mechanics.LevelGeneration
         }
 
         [Header("References")]
-        [SerializeField] private PoolService _poolService;
-        [SerializeField] private Transform _playerRoot;
+        [Inject] private PoolService _poolService;
+        [Inject] private MovementDistanceTracker _distanceTracker;
         [SerializeField] private Transform _spawnOrigin;
 
         [Header("Segments")]
@@ -127,9 +129,10 @@ namespace Gameplay.Mechanics.LevelGeneration
                 _segmentBag.Reset();
                 _variantBags.Clear();
 
-                _playerDistance = GetPlayerDistance();
+                _playerDistance = 0f;
                 _isRunning = true;
                 OnRunStarted?.Invoke();
+                _playerDistance = _distanceTracker.Distance;
 
                 if (!SpawnSegment(_startSegmentPrefab, 0f, _currentDifficulty))
                 {
@@ -182,13 +185,13 @@ namespace Gameplay.Mechanics.LevelGeneration
             if (!_isRunning)
                 return;
 
-            if (_playerRoot == null || _poolService == null)
+            if (_distanceTracker == null || _poolService == null)
             {
                 StopRun();
                 return;
             }
 
-            _playerDistance = GetPlayerDistance();
+            _playerDistance = _distanceTracker.Distance;
 
             RecyclePassedSegments();
             EnsureSegmentsAhead();
@@ -286,11 +289,6 @@ namespace Gameplay.Mechanics.LevelGeneration
             }
         }
 
-        private float GetPlayerDistance()
-        {
-            return Vector3.Dot(_playerRoot.position - _runOriginPosition, _runForward);
-        }
-
         public void ReturnActiveSegments()
         {
             for (int i = _activeSegments.Count - 1; i >= 0; i--)
@@ -319,9 +317,9 @@ namespace Gameplay.Mechanics.LevelGeneration
                 return false;
             }
 
-            if (_playerRoot == null)
+            if (_distanceTracker == null)
             {
-                Debug.LogError($"{nameof(LevelSegmentSpawner)}: Player Root is not assigned.", this);
+                Debug.LogError($"{nameof(LevelSegmentSpawner)}: MovementDistanceTracker is not registered.", this);
                 return false;
             }
 

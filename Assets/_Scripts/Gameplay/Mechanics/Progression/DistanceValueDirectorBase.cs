@@ -1,43 +1,47 @@
 using System;
-using Abstractions.Components.Movement;
 using Data.Progression;
+using Reflex.Attributes;
 using UnityEngine;
 
 namespace Gameplay.Mechanics.Progression
 {
     public abstract class DistanceValueDirectorBase : MonoBehaviour
     {
-        [SerializeField] private MovementBase _movement;
+        [Inject] private MovementDistanceTracker _distanceTracker;
         [SerializeField] private DistanceValueProfile _profile;
 
-        private float _distance;
         private float _currentValue;
         private bool _isRunning;
 
         public bool IsRunning => _isRunning;
-        public float Distance => _distance;
+        public float Distance => _distanceTracker != null ? _distanceTracker.Distance : 0f;
         public float CurrentValue => _currentValue;
 
         public event Action<float> OnValueChanged;
 
         private void OnEnable()
         {
-            if (_movement == null)
+            if (_distanceTracker == null)
+            {
+                Debug.LogError($"{GetType().Name}: MovementDistanceTracker is not registered.", this);
                 return;
+            }
 
-            _movement.OnMovementStarted.AddListener(HandleMovementStarted);
-            _movement.OnMovementStopped.AddListener(StopProgression);
+            _distanceTracker.OnTrackingStarted += HandleTrackingStarted;
+            _distanceTracker.OnTrackingStopped += StopProgression;
+            _distanceTracker.OnDistanceChanged += HandleDistanceChanged;
 
-            if (_movement.IsMoving)
+            if (_distanceTracker.IsTracking)
                 StartProgression();
         }
 
         private void OnDisable()
         {
-            if (_movement != null)
+            if (_distanceTracker != null)
             {
-                _movement.OnMovementStarted.RemoveListener(HandleMovementStarted);
-                _movement.OnMovementStopped.RemoveListener(StopProgression);
+                _distanceTracker.OnTrackingStarted -= HandleTrackingStarted;
+                _distanceTracker.OnTrackingStopped -= StopProgression;
+                _distanceTracker.OnDistanceChanged -= HandleDistanceChanged;
             }
 
             StopProgression();
@@ -48,20 +52,18 @@ namespace Gameplay.Mechanics.Progression
             if (_isRunning)
                 return true;
 
-            if (_movement == null || _profile == null || !_profile.HasKeyframes)
+            if (_distanceTracker == null || _profile == null || !_profile.HasKeyframes)
             {
-                Debug.LogError($"{GetType().Name}: Movement or profile is not configured.", this);
+                Debug.LogError($"{GetType().Name}: Distance tracker or profile is not configured.", this);
                 return false;
             }
 
             if (!OnStart())
                 return false;
 
-            _distance = 0f;
             _currentValue = float.NaN;
             _isRunning = true;
-            _movement.OnDistanceMoved += HandleDistanceMoved;
-            UpdateValue();
+            UpdateValue(_distanceTracker.Distance);
             return true;
         }
 
@@ -70,7 +72,6 @@ namespace Gameplay.Mechanics.Progression
             if (!_isRunning)
                 return;
 
-            _movement.OnDistanceMoved -= HandleDistanceMoved;
             _isRunning = false;
             OnStop();
         }
@@ -79,23 +80,20 @@ namespace Gameplay.Mechanics.Progression
         protected abstract void ApplyValue(float value);
         protected abstract void OnStop();
 
-        private void HandleMovementStarted()
+        private void HandleTrackingStarted()
         {
             StartProgression();
         }
 
-        private void HandleDistanceMoved(float distance)
+        private void HandleDistanceChanged(float distance)
         {
-            if (!_isRunning || float.IsNaN(distance) || float.IsInfinity(distance) || distance <= 0f)
-                return;
-
-            _distance += distance;
-            UpdateValue();
+            if (_isRunning)
+                UpdateValue(distance);
         }
 
-        private void UpdateValue()
+        private void UpdateValue(float distance)
         {
-            float value = _profile.Evaluate(_distance);
+            float value = _profile.Evaluate(distance);
 
             if (Mathf.Approximately(_currentValue, value))
                 return;

@@ -1,5 +1,7 @@
 using Abstractions.Components.Movement;
 using Cysharp.Threading.Tasks;
+using System;
+using System.Threading;
 using Gameplay.Mechanics.Collectables;
 using Gameplay.Mechanics.LevelGeneration;
 using Gameplay.Mechanics.PowerUps;
@@ -53,12 +55,29 @@ namespace Tests
             OnBalanceChanged(_wallet.Balance, _wallet.Balance);
             HandleScoreChanged(_score.Value, _score.Value);
 
-            _levelSpawner.StartRunAsync().Forget();
+            StartRunAsync(this.GetCancellationTokenOnDestroy()).Forget();
+        }
 
-            if (!_movement.StartMovement())
-                return;
+        private async UniTask StartRunAsync(CancellationToken cancellationToken)
+        {
+            try
+            {
+                await _levelSpawner.StartRunAsync(cancellationToken);
 
-            _distanceScoreTracker.StartScoring();
+                if (cancellationToken.IsCancellationRequested || !_levelSpawner.IsRunning)
+                    return;
+
+                if (!_movement.StartMovement())
+                {
+                    _levelSpawner.StopRun();
+                    return;
+                }
+
+                _distanceScoreTracker.StartScoring();
+            }
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+            {
+            }
         }
 
         private void OnPowerUpStarted(PowerUpBase powerUp)
@@ -81,6 +100,16 @@ namespace Tests
 
             if (_movement != null)
                 _movement.StopMovement();
+
+            if (_levelSpawner != null)
+                _levelSpawner.StopRun();
+
+            if (_powerUpHandler != null)
+            {
+                _powerUpHandler.OnStarted -= OnPowerUpStarted;
+                _powerUpHandler.OnEnded -= OnPowerUpEnded;
+                _powerUpHandler.StopHandling();
+            }
         }
 
         private void OnDestroy()

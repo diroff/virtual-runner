@@ -1,11 +1,12 @@
 using Gameplay.Components.Movement;
+using Reflex.Attributes;
 using UnityEngine;
 
 namespace Gameplay.Mechanics.Progression
 {
     public sealed class MovementSpeedDirector : DistanceValueDirectorBase
     {
-        [SerializeField] private MovementSpeed _movementSpeed;
+        [Inject] private MovementSpeed _movementSpeed;
 
         private float _initialSpeed;
 

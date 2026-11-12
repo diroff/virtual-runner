@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Data.LevelGeneration;
 using Gameplay.Mechanics.PowerUps;
+using Reflex.Attributes;
 using Services;
 using UnityEngine;
 
@@ -15,8 +16,8 @@ namespace Gameplay.Mechanics.LevelGeneration
             public Action OnHidden;
         }
 
-        [SerializeField] private LevelSegmentSpawner _segmentSpawner;
-        [SerializeField] private PoolService _poolService;
+        [Inject] private LevelSegmentSpawner _segmentSpawner;
+        [Inject] private PoolService _poolService;
         [SerializeField] private PowerUpSpawnProfile _profile;
         [SerializeField] private List<PowerUpPickup> _pickupPrefabs = new();
         [SerializeField, Min(0)] private int _preloadCountPerPrefab = 2;

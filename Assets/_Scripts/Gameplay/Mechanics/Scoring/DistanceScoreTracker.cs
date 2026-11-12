@@ -1,22 +1,27 @@
 using System;
-using Abstractions.Components.Movement;
+using System.Collections.Generic;
+using Gameplay.Mechanics.Progression;
 using Gameplay.Models;
+using Reflex.Attributes;
 using UnityEngine;
 
 namespace Gameplay.Mechanics.Scoring
 {
     public class DistanceScoreTracker : MonoBehaviour
     {
-        [SerializeField] private MovementBase _movement;
+        [Inject] private MovementDistanceTracker _distanceTracker;
         [SerializeField, Min(0f)] private float _pointsPerMeter = 1f;
         [SerializeField, Min(0.01f)] private float _initialMultiplier = 1f;
 
+        private readonly Dictionary<UnityEngine.Object, float> _multiplierContributions = new();
         private Score _score;
         private double _fractionalPoints;
+        private float _baseMultiplier;
         private float _multiplier;
         private bool _isScoring;
 
         public bool IsScoring => _isScoring;
+        public float BaseMultiplier => _baseMultiplier;
         public float Multiplier => _multiplier;
         public Score Score => _score;
 
@@ -28,7 +33,8 @@ namespace Gameplay.Mechanics.Scoring
 
         private void Awake()
         {
-            _multiplier = Mathf.Max(0.01f, _initialMultiplier);
+            _baseMultiplier = Mathf.Max(0.01f, _initialMultiplier);
+            _multiplier = _baseMultiplier;
         }
 
         private void OnDisable()
@@ -42,27 +48,26 @@ namespace Gameplay.Mechanics.Scoring
                 throw new ArgumentNullException(nameof(score));
 
             StopScoring();
-
             _score = score;
             _fractionalPoints = 0d;
-
+            _multiplierContributions.Clear();
             SetMultiplier(_initialMultiplier);
+            RecalculateMultiplier();
             OnScoreInitialized?.Invoke(_score);
         }
 
         public bool StartScoring()
         {
-            if (_score == null || _movement == null)
+            if (_score == null || _distanceTracker == null)
                 return false;
 
             if (_isScoring)
                 return true;
 
-            _movement.OnDistanceMoved += HandleDistanceMoved;
+            _distanceTracker.OnDistanceAdvanced += HandleDistanceAdvanced;
+            _distanceTracker.OnTrackingStopped += StopScoring;
             _isScoring = true;
-
             OnScoringStarted?.Invoke();
-
             return true;
         }
 
@@ -71,11 +76,13 @@ namespace Gameplay.Mechanics.Scoring
             if (!_isScoring)
                 return;
 
-            if (_movement != null)
-                _movement.OnDistanceMoved -= HandleDistanceMoved;
+            if (_distanceTracker != null)
+            {
+                _distanceTracker.OnDistanceAdvanced -= HandleDistanceAdvanced;
+                _distanceTracker.OnTrackingStopped -= StopScoring;
+            }
 
             _isScoring = false;
-
             OnScoringStopped?.Invoke();
         }
 
@@ -84,11 +91,8 @@ namespace Gameplay.Mechanics.Scoring
             if (float.IsNaN(multiplier) || float.IsInfinity(multiplier) || multiplier <= 0f)
                 return;
 
-            if (Mathf.Approximately(_multiplier, multiplier))
-                return;
-
-            _multiplier = multiplier;
-            OnMultiplierChanged?.Invoke(_multiplier);
+            _baseMultiplier = multiplier;
+            RecalculateMultiplier();
         }
 
         public void AddMultiplier(float amount)
@@ -96,7 +100,7 @@ namespace Gameplay.Mechanics.Scoring
             if (float.IsNaN(amount) || float.IsInfinity(amount) || amount <= 0f)
                 return;
 
-            SetMultiplier(_multiplier + amount);
+            SetMultiplier(_baseMultiplier + amount);
         }
 
         public void RemoveMultiplier(float amount)
@@ -104,32 +108,54 @@ namespace Gameplay.Mechanics.Scoring
             if (float.IsNaN(amount) || float.IsInfinity(amount) || amount <= 0f)
                 return;
 
-            float result = _multiplier - amount;
+            SetMultiplier(_baseMultiplier - amount);
+        }
 
-            if (result <= 0f)
+        public void SetMultiplierContribution(UnityEngine.Object source, float value)
+        {
+            if (source == null || float.IsNaN(value) || float.IsInfinity(value) || value <= 0f)
                 return;
 
-            SetMultiplier(result);
+            _multiplierContributions[source] = value;
+            RecalculateMultiplier();
+        }
+
+        public void RemoveMultiplierContribution(UnityEngine.Object source)
+        {
+            if (source != null && _multiplierContributions.Remove(source))
+                RecalculateMultiplier();
         }
 
         public void ResetScoring()
         {
             StopScoring();
-
             _fractionalPoints = 0d;
             _score?.Reset();
-
+            _multiplierContributions.Clear();
             SetMultiplier(_initialMultiplier);
+            RecalculateMultiplier();
         }
 
-        private void HandleDistanceMoved(float distance)
+        private void RecalculateMultiplier()
+        {
+            float result = _baseMultiplier;
+            foreach (float contribution in _multiplierContributions.Values)
+                result *= contribution;
+
+            if (Mathf.Approximately(_multiplier, result))
+                return;
+
+            _multiplier = result;
+            OnMultiplierChanged?.Invoke(result);
+        }
+
+        private void HandleDistanceAdvanced(float distance)
         {
             if (!_isScoring || distance <= 0f || _pointsPerMeter <= 0f)
                 return;
 
             double totalPoints = _fractionalPoints + distance * _pointsPerMeter * _multiplier;
             long earnedPoints = (long)Math.Floor(totalPoints);
-
             _fractionalPoints = totalPoints - earnedPoints;
 
             if (earnedPoints <= 0)

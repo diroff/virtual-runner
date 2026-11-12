@@ -1,14 +1,15 @@
 using System;
 using Abstractions.Components.Movement;
 using Gameplay.Mechanics.LevelGeneration;
+using Reflex.Attributes;
 using UnityEngine;
 
 namespace Gameplay.Mechanics.Progression
 {
     public sealed class MovementDistanceTracker : MonoBehaviour
     {
-        [SerializeField] private MovementBase _movement;
-        [SerializeField] private LevelSegmentSpawner _segmentSpawner;
+        [Inject] private MovementBase _movement;
+        [Inject] private LevelSegmentSpawner _segmentSpawner;
 
         private float _distance;
         private bool _isTracking;
@@ -17,12 +18,15 @@ namespace Gameplay.Mechanics.Progression
         public bool IsTracking => _isTracking;
 
         public event Action<float> OnDistanceChanged;
+        public event Action<float> OnDistanceAdvanced;
+        public event Action OnTrackingStarted;
+        public event Action OnTrackingStopped;
 
         private void OnEnable()
         {
             if (_movement == null || _segmentSpawner == null)
             {
-                Debug.LogError($"{nameof(MovementDistanceTracker)}: Movement or segment spawner is not assigned.", this);
+                Debug.LogError($"{nameof(MovementDistanceTracker)}: Movement or segment spawner is not registered.", this);
                 return;
             }
 
@@ -44,7 +48,11 @@ namespace Gameplay.Mechanics.Progression
             if (_movement != null)
                 _movement.OnDistanceMoved -= HandleDistanceMoved;
 
-            _isTracking = false;
+            if (_isTracking)
+            {
+                _isTracking = false;
+                OnTrackingStopped?.Invoke();
+            }
         }
 
         private void HandleRunStarted()
@@ -52,11 +60,17 @@ namespace Gameplay.Mechanics.Progression
             _distance = 0f;
             _isTracking = true;
             OnDistanceChanged?.Invoke(_distance);
+            if (_isTracking)
+                OnTrackingStarted?.Invoke();
         }
 
         private void HandleRunStopped()
         {
+            if (!_isTracking)
+                return;
+
             _isTracking = false;
+            OnTrackingStopped?.Invoke();
         }
 
         private void HandleDistanceMoved(float distance)
@@ -66,6 +80,8 @@ namespace Gameplay.Mechanics.Progression
 
             _distance += distance;
             OnDistanceChanged?.Invoke(_distance);
+            if (_isTracking)
+                OnDistanceAdvanced?.Invoke(distance);
         }
     }
 }

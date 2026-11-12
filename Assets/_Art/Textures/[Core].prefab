@@ -62,6 +62,15 @@ MonoBehaviour:
   _coinCollectionHandler: {fileID: 7772639769090006894}
   _distanceScoreTracker: {fileID: 250795028422402142}
   _player: {fileID: 0}
+  _movementDistanceTracker: {fileID: 491178887814131743}
+  _movement: {fileID: 0}
+  _movementSpeed: {fileID: 0}
+  _powerUpHandler: {fileID: 0}
+  _powerUpContext: {fileID: 0}
+  _segmentDifficultyDirector: {fileID: 7203118832116373668}
+  _levelPowerUpSpawner: {fileID: 2983678305580909858}
+  _movementSpeedDirector: {fileID: 2025459335336214153}
+  _scoreMultiplierDirector: {fileID: 4134823873333636713}
 --- !u!1 &796472385109386432
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,9 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da99099ab72146eabb3a961e2b2b26de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Mechanics.Progression.ScoreMultiplierDirector
-  _movement: {fileID: 0}
   _profile: {fileID: 11400000, guid: adf81e6ed9194492919a778c0782622f, type: 2}
-  _scoreTracker: {fileID: 250795028422402142}
 --- !u!1 &4105449169946764829
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,8 +211,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd51ad741d944e42ad3161a225ae68e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Mechanics.LevelGeneration.LevelPowerUpSpawner
-  _segmentSpawner: {fileID: 544604988709195225}
-  _poolService: {fileID: 3917345758807360195}
   _profile: {fileID: 11400000, guid: 7dfa9fc120ca425aa91b751318eb1c25, type: 2}
   _pickupPrefabs:
   - {fileID: 3859099827146259220, guid: c7a9a69fda836a146866e919c26d0696, type: 3}
@@ -306,8 +311,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8964037c5f767b47ac12b54a974b16d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Mechanics.LevelGeneration.LevelSegmentSpawner
-  _poolService: {fileID: 3917345758807360195}
-  _playerRoot: {fileID: 0}
   _spawnOrigin: {fileID: 6516919041498040701}
   _startSegmentPrefab: {fileID: 5831274277005636497, guid: 721e90eabf712d74cb353a9ee75c09a9, type: 3}
   _segmentPrefabs:
@@ -419,8 +422,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c664ae7d08be4d8cbf5f45cb7ad7ffd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Mechanics.Progression.MovementDistanceTracker
-  _movement: {fileID: 0}
-  _segmentSpawner: {fileID: 544604988709195225}
 --- !u!1 &5890498666679814591
 GameObject:
   m_ObjectHideFlags: 0
@@ -465,7 +466,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 095f397bff1466e46b99abc4d4bd587a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Mechanics.Scoring.DistanceScoreMechanic
-  _movement: {fileID: 0}
   _pointsPerMeter: 1
   _initialMultiplier: 1
 --- !u!1 &6556191798427107868
@@ -557,9 +557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a01f865b23d44ccdb9530029b0d2ae4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Mechanics.Progression.MovementSpeedDirector
-  _movement: {fileID: 0}
   _profile: {fileID: 11400000, guid: aff792dc2ca34e099ed571051a2b55ba, type: 2}
-  _movementSpeed: {fileID: 0}
 --- !u!1 &8002954804226140848
 GameObject:
   m_ObjectHideFlags: 0
@@ -708,5 +706,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f093d47a10e24b19a8504fdf7eeb2d46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Mechanics.LevelGeneration.SegmentDifficultyDirector
-  _spawner: {fileID: 544604988709195225}
   _profile: {fileID: 11400000, guid: 041d2ceec0ea49038a94b1caff59e612, type: 2}

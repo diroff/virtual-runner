@@ -1,4 +1,5 @@
 using Gameplay.Mechanics.Progression;
+using Reflex.Attributes;
 using TMPro;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ namespace Gameplay.Components.View
 {
     public sealed class MovementDistanceTextView : MonoBehaviour
     {
-        [SerializeField] private MovementDistanceTracker _distanceTracker;
+        [Inject] private MovementDistanceTracker _distanceTracker;
         [SerializeField] private TMP_Text _text;
         [SerializeField] private string _suffix = " м";
 

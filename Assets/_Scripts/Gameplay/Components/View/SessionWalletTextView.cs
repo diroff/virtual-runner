@@ -1,5 +1,6 @@
 using Gameplay.Mechanics.Collectables;
 using Gameplay.Models;
+using Reflex.Attributes;
 using TMPro;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace Gameplay.Components.View
 {
     public sealed class SessionWalletTextView : MonoBehaviour
     {
-        [SerializeField] private CoinCollectionHandler _coinCollectionHandler;
+        [Inject] private CoinCollectionHandler _coinCollectionHandler;
         [SerializeField] private TMP_Text _text;
 
         private Wallet _wallet;
@@ -20,12 +21,6 @@ namespace Gameplay.Components.View
 
         private void OnEnable()
         {
-            if (_coinCollectionHandler == null || _text == null)
-            {
-                Debug.LogError($"{nameof(SessionWalletTextView)}: Coin collection handler or text is not assigned.", this);
-                return;
-            }
-
             _coinCollectionHandler.OnWalletInitialized += Bind;
             Bind(_coinCollectionHandler.SessionWallet);
         }

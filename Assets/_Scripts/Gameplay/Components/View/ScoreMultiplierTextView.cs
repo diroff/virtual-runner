@@ -1,5 +1,6 @@
 using Gameplay.Mechanics.Scoring;
 using Gameplay.Models;
+using Reflex.Attributes;
 using TMPro;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace Gameplay.Components.View
 {
     public sealed class ScoreMultiplierTextView : MonoBehaviour
     {
-        [SerializeField] private DistanceScoreTracker _scoreTracker;
+        [Inject] private DistanceScoreTracker _scoreTracker;
         [SerializeField] private TMP_Text _text;
 
         private int _displayedMultiplier = int.MinValue;

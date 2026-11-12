@@ -1,11 +1,12 @@
 using Gameplay.Mechanics.Scoring;
+using Reflex.Attributes;
 using UnityEngine;
 
 namespace Gameplay.Mechanics.Progression
 {
     public sealed class ScoreMultiplierDirector : DistanceValueDirectorBase
     {
-        [SerializeField] private DistanceScoreTracker _scoreTracker;
+        [Inject] private DistanceScoreTracker _scoreTracker;
 
         private float _initialMultiplier;
 
@@ -17,7 +18,7 @@ namespace Gameplay.Mechanics.Progression
                 return false;
             }
 
-            _initialMultiplier = _scoreTracker.Multiplier;
+            _initialMultiplier = _scoreTracker.BaseMultiplier;
             return true;
         }
 

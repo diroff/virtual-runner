@@ -1,11 +1,12 @@
 using Data.LevelGeneration;
+using Reflex.Attributes;
 using UnityEngine;
 
 namespace Gameplay.Mechanics.LevelGeneration
 {
     public sealed class SegmentDifficultyDirector : MonoBehaviour
     {
-        [SerializeField] private LevelSegmentSpawner _spawner;
+        [Inject] private LevelSegmentSpawner _spawner;
         [SerializeField] private SegmentDifficultyProfile _profile;
 
         private readonly WeightedDifficultySelector _selector = new();

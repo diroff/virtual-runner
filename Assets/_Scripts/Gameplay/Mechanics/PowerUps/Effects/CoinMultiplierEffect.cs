@@ -1,13 +1,14 @@
 using Data.PowerUps;
 using Gameplay.Mechanics.Collectables;
 using Gameplay.Mechanics.PowerUps.Lifetimes;
+using Reflex.Attributes;
 using UnityEngine;
 
 namespace Gameplay.Mechanics.PowerUps.Effects
 {
     public sealed class CoinMultiplierEffect : PowerUpEffectBase
     {
-        [SerializeField] private CoinCollectionHandler _coinCollectionHandler;
+        [Inject] private CoinCollectionHandler _coinCollectionHandler;
         [SerializeField, Min(1f)] private float _multiplier = 2f;
 
         protected override bool OnStart(PowerUpContext context, PowerUpLevelSettings settings, PowerUpLifetimeBase lifetime)

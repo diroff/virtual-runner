@@ -1,4 +1,5 @@
 using Gameplay.Components.Movement;
+using Reflex.Attributes;
 using TMPro;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ namespace Gameplay.Components.View
 {
     public sealed class MovementSpeedTextView : MonoBehaviour
     {
-        [SerializeField] private MovementSpeed _movementSpeed;
+        [Inject] private MovementSpeed _movementSpeed;
         [SerializeField] private TMP_Text _text;
 
         private int _displayedSpeed = int.MinValue;

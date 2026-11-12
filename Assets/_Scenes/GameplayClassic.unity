@@ -261,7 +261,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeab0ad2327c4f059944526feeb2aa76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Components.View.MovementDistanceTextView
-  _distanceTracker: {fileID: 828663830}
   _text: {fileID: 296905635}
   _suffix: ' m'
 --- !u!222 &296905637
@@ -453,52 +452,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &828663828
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 828663829}
-  - component: {fileID: 828663830}
-  m_Layer: 0
-  m_Name: MovementDistanceTracker
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &828663829
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 828663828}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6308381505627480014}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &828663830
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 828663828}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c664ae7d08be4d8cbf5f45cb7ad7ffd1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Mechanics.Progression.MovementDistanceTracker
-  _movement: {fileID: 1132823584}
-  _segmentSpawner: {fileID: 6308381505627480015}
 --- !u!1 &883581076
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,6 +718,28 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7448115368323534995, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
   m_PrefabInstance: {fileID: 1147140272}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1147140276 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3370072930662132254, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
+  m_PrefabInstance: {fileID: 1147140272}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c882ca31cc4d7e45b880ecbc9878420, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Mechanics.PowerUps.PowerUpHandler
+--- !u!114 &1147140277 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7199592679784898196, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
+  m_PrefabInstance: {fileID: 1147140272}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50bab04ef5e35e14cac80df1df4e3afe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Mechanics.PowerUps.PowerUpContext
 --- !u!114 &1359636898 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1799849550761869788, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
@@ -916,22 +891,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 250795028422402142, guid: 23b4db5e025750348937dc9b46816c2a, type: 3}
-      propertyPath: _movement
-      value: 
-      objectReference: {fileID: 1132823584}
-    - target: {fileID: 544604988709195225, guid: 23b4db5e025750348937dc9b46816c2a, type: 3}
-      propertyPath: _playerRoot
-      value: 
-      objectReference: {fileID: 1132823578}
-    - target: {fileID: 2025459335336214153, guid: 23b4db5e025750348937dc9b46816c2a, type: 3}
-      propertyPath: _movement
-      value: 
-      objectReference: {fileID: 1132823584}
-    - target: {fileID: 2025459335336214153, guid: 23b4db5e025750348937dc9b46816c2a, type: 3}
-      propertyPath: _movementSpeed
-      value: 
-      objectReference: {fileID: 1147140273}
     - target: {fileID: 2120946918989291042, guid: 23b4db5e025750348937dc9b46816c2a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -976,10 +935,22 @@ PrefabInstance:
       propertyPath: _player
       value: 
       objectReference: {fileID: 1147140274}
-    - target: {fileID: 4134823873333636713, guid: 23b4db5e025750348937dc9b46816c2a, type: 3}
+    - target: {fileID: 2689472014991624277, guid: 23b4db5e025750348937dc9b46816c2a, type: 3}
       propertyPath: _movement
       value: 
       objectReference: {fileID: 1132823584}
+    - target: {fileID: 2689472014991624277, guid: 23b4db5e025750348937dc9b46816c2a, type: 3}
+      propertyPath: _movementSpeed
+      value: 
+      objectReference: {fileID: 1147140273}
+    - target: {fileID: 2689472014991624277, guid: 23b4db5e025750348937dc9b46816c2a, type: 3}
+      propertyPath: _powerUpContext
+      value: 
+      objectReference: {fileID: 1147140277}
+    - target: {fileID: 2689472014991624277, guid: 23b4db5e025750348937dc9b46816c2a, type: 3}
+      propertyPath: _powerUpHandler
+      value: 
+      objectReference: {fileID: 1147140276}
     - target: {fileID: 5409075868692760399, guid: 23b4db5e025750348937dc9b46816c2a, type: 3}
       propertyPath: m_Name
       value: '[Core]'
@@ -1002,10 +973,7 @@ PrefabInstance:
       objectReference: {fileID: 1132823578}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 2120946918989291042, guid: 23b4db5e025750348937dc9b46816c2a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 828663829}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23b4db5e025750348937dc9b46816c2a, type: 3}
 --- !u!114 &6308381505627480013 stripped
@@ -1019,22 +987,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 095f397bff1466e46b99abc4d4bd587a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Mechanics.Scoring.DistanceScoreMechanic
---- !u!4 &6308381505627480014 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2120946918989291042, guid: 23b4db5e025750348937dc9b46816c2a, type: 3}
-  m_PrefabInstance: {fileID: 6308381505627480012}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6308381505627480015 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 544604988709195225, guid: 23b4db5e025750348937dc9b46816c2a, type: 3}
-  m_PrefabInstance: {fileID: 6308381505627480012}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8964037c5f767b47ac12b54a974b16d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Mechanics.LevelGeneration.LevelSegmentSpawner
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

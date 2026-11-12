@@ -20,21 +20,17 @@ namespace Gameplay.Mechanics.Lifecycle
         [Inject] private CoinCollectionHandler _coinCollectionHandler;
         [Inject] private DistanceScoreTracker _distanceScoreTracker;
 
-        private PowerUpContext _powerUpContext;
-        private PowerUpHandler _powerUpHandler;
+        [Inject] private PowerUpContext _powerUpContext;
+        [Inject] private PowerUpHandler _powerUpHandler;
+        [Inject] private MovementBase _movement;
 
         private Score _score;
         private Wallet _wallet;
 
-        private MovementBase _movement;
 
         protected override void OnBeforeStart()
         {
             base.OnBeforeStart();
-
-            _movement = _player.GetComponentInChildren<MovementBase>();
-            _powerUpContext = _player.GetComponentInChildren<PowerUpContext>();
-            _powerUpHandler = _player.GetComponentInChildren<PowerUpHandler>();
 
             _score = new Score();
             _wallet = new Wallet();
@@ -51,7 +47,19 @@ namespace Gameplay.Mechanics.Lifecycle
 
             await _levelSpawner.StartRunAsync(cancellationToken);
 
-            _movement.StartMovement();
+            if (!_levelSpawner.IsRunning || cancellationToken.IsCancellationRequested)
+            {
+                _powerUpHandler.StopHandling();
+                return;
+            }
+
+            if (!_movement.StartMovement())
+            {
+                _levelSpawner.StopRun();
+                _powerUpHandler.StopHandling();
+                return;
+            }
+
             _distanceScoreTracker.StartScoring();
         }
     }

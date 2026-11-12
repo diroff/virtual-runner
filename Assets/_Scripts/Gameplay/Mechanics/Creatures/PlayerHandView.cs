@@ -1,12 +1,13 @@
 using Data.PowerUps;
 using Gameplay.Mechanics.PowerUps;
+using Reflex.Attributes;
 using UnityEngine;
 
 namespace Gameplay.Mechanics.Creatures
 {
     public class PlayerHandView : MonoBehaviour
     {
-        [SerializeField] private PowerUpHandler _powerUpHandler;
+        [Inject] private PowerUpHandler _powerUpHandler;
         [SerializeField] private PowerUpSlot _slot;
         [SerializeField] private Animator _animator;
 
