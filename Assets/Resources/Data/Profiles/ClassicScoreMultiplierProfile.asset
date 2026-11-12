@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efbbcb8c7f274557874327c0c979ae01, type: 3}
+  m_Name: ClassicScoreMultiplierProfile
+  m_EditorClassIdentifier: 
+  _keyframes:
+  - _distance: 0
+    _value: 1
+  - _distance: 650
+    _value: 2
+  - _distance: 1200
+    _value: 3
+  - _distance: 2000
+    _value: 4
+  - _distance: 3000
+    _value: 5

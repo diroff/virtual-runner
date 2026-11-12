@@ -86,10 +86,12 @@ Material:
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _Blend: 0
-    - _BlendModePreserveSpecular: 1
+    - _BlendModePreserveSpecular: 0
     - _BumpScale: 1
+    - _CastShadows: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
+    - _ColorMode: 0
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
@@ -105,6 +107,7 @@ Material:
     - _NormalMapEnabled: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
+    - _PreserveSpecularLighting: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Smoothness: 0.69
@@ -121,6 +124,7 @@ Material:
     m_Colors:
     - _BaseColor: {r: 0.5886792, g: 0.39606804, b: 0.29100743, a: 1}
     - _Color: {r: 0.5886792, g: 0.396068, b: 0.2910074, a: 1}
+    - _ColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []

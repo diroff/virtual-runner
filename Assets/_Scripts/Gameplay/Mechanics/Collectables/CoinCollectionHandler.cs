@@ -19,7 +19,9 @@ namespace Gameplay.Mechanics.Collectables
 
         public float Multiplier => _multiplier;
         public IReadOnlyCollection<CoinCollector> Collectors => _registeredCollectors;
+        public Wallet SessionWallet => _sessionWallet;
 
+        public event Action<Wallet> OnWalletInitialized;
         public event Action<long> OnCoinsCollected;
         public event Action<float> OnMultiplierChanged;
         public event Action<CoinCollector> OnCollectorRegistered;
@@ -28,6 +30,7 @@ namespace Gameplay.Mechanics.Collectables
         public void Initialize(Wallet sessionWallet)
         {
             _sessionWallet = sessionWallet ?? throw new ArgumentNullException(nameof(sessionWallet));
+            OnWalletInitialized?.Invoke(_sessionWallet);
         }
 
         private void Awake()

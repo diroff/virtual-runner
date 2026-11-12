@@ -20,6 +20,7 @@ namespace Gameplay.Mechanics.Scoring
         public float Multiplier => _multiplier;
         public Score Score => _score;
 
+        public event Action<Score> OnScoreInitialized;
         public event Action OnScoringStarted;
         public event Action OnScoringStopped;
         public event Action<float> OnMultiplierChanged;
@@ -46,6 +47,7 @@ namespace Gameplay.Mechanics.Scoring
             _fractionalPoints = 0d;
 
             SetMultiplier(_initialMultiplier);
+            OnScoreInitialized?.Invoke(_score);
         }
 
         public bool StartScoring()

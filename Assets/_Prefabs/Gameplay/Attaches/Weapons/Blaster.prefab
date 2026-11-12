@@ -83,8 +83,8 @@ MonoBehaviour:
   _secondsBetweenShots: 0.25
   _muzzle: {fileID: 465004853613636991}
   _projectilePrefab: {fileID: 3021209089594109750, guid: 801606fe22311f945a4cb0200f55d0f4, type: 3}
-  _projectileSpeed: 20
-  _projectileRange: 30
+  _projectileSpeed: 35
+  _projectileRange: 50
   _projectileDamage: 1
 --- !u!114 &2378344304097431324
 MonoBehaviour:
