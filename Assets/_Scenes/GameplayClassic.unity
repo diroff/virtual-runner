@@ -955,6 +955,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: '[Core]'
       objectReference: {fileID: 0}
+    - target: {fileID: 5409075868692760399, guid: 23b4db5e025750348937dc9b46816c2a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7772639769090006894, guid: 23b4db5e025750348937dc9b46816c2a, type: 3}
       propertyPath: '_coinCollectors.Array.data[0]'
       value: 
