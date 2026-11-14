@@ -546,7 +546,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2631230229884400438, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
   m_PrefabInstance: {fileID: 1147140272}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1992864933}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f68e2c47be03844fae93f393a9970f1, type: 3}
@@ -557,7 +557,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1275288096190205476, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
   m_PrefabInstance: {fileID: 1147140272}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1992864933}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 593541db744d16d4aaaf45df07069cbb, type: 3}
@@ -631,6 +631,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 310077405046471542, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
+      propertyPath: m_RequestedTrackingOriginMode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3253713592248978604, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
       propertyPath: _scoreTracker
       value: 
@@ -647,6 +651,10 @@ PrefabInstance:
       propertyPath: _coinCollectionHandler
       value: 
       objectReference: {fileID: 2027060576}
+    - target: {fileID: 4785459082176657472, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
+      propertyPath: m_StepOffset
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 5744692675849553520, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
       propertyPath: m_fontSize
       value: 1.75
@@ -689,14 +697,17 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7448115368323534995, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
       insertIndex: -1
       addedObject: {fileID: 296905634}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 270519200205191927, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1992864935}
   m_SourcePrefab: {fileID: 100100000, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
 --- !u!114 &1147140273 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7929623136970571525, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
   m_PrefabInstance: {fileID: 1147140272}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1992864933}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5e73a5b46786ef419ce76b9e43eec62, type: 3}
@@ -707,7 +718,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1064081074450196914, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
   m_PrefabInstance: {fileID: 1147140272}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1992864933}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c65352ca07a0d194d9cfdcf307e13a8d, type: 3}
@@ -723,7 +734,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3370072930662132254, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
   m_PrefabInstance: {fileID: 1147140272}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1992864933}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c882ca31cc4d7e45b880ecbc9878420, type: 3}
@@ -734,7 +745,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7199592679784898196, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
   m_PrefabInstance: {fileID: 1147140272}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1992864933}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 50bab04ef5e35e14cac80df1df4e3afe, type: 3}
@@ -841,6 +852,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593541db744d16d4aaaf45df07069cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Components.Interaction.CoinCollector
+--- !u!114 &1992864932 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 310077405046471542, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
+  m_PrefabInstance: {fileID: 1147140272}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1992864933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0cb9aa70a22847b5925ee5f067c10a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1992864933 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 270519200205191927, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
+  m_PrefabInstance: {fileID: 1147140272}
+  m_PrefabAsset: {fileID: 0}
+--- !u!143 &1992864934 stripped
+CharacterController:
+  m_CorrespondingSourceObject: {fileID: 4785459082176657472, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
+  m_PrefabInstance: {fileID: 1147140272}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1992864935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1992864933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ae078c5e5f19494d8acc0b6b7f675e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Components.XRCharacterControllerHeight
+  _xrOrigin: {fileID: 1992864932}
+  _controller: {fileID: 1992864934}
+  _minHeight: 0.5
+  _maxHeight: 2.5
 --- !u!114 &2027060576 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7772639769090006894, guid: 23b4db5e025750348937dc9b46816c2a, type: 3}
