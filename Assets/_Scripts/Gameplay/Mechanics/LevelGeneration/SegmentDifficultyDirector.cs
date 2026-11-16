@@ -16,7 +16,7 @@ namespace Gameplay.Mechanics.LevelGeneration
             if (_spawner == null)
                 return;
 
-            _spawner.OnRunStarted += ResetSelection;
+            _spawner.OnLevelPrepared += ResetSelection;
             _spawner.OnSegmentRequested += HandleSegmentRequested;
             ResetSelection();
         }
@@ -26,7 +26,7 @@ namespace Gameplay.Mechanics.LevelGeneration
             if (_spawner == null)
                 return;
 
-            _spawner.OnRunStarted -= ResetSelection;
+            _spawner.OnLevelPrepared -= ResetSelection;
             _spawner.OnSegmentRequested -= HandleSegmentRequested;
         }
 

@@ -16,6 +16,7 @@ namespace Installers
     {
         [SerializeField] private PoolService _poolService;
         [SerializeField] private LevelSegmentSpawner _levelSpawner;
+        [SerializeField] private LevelPreloader _levelPreloader;
         [SerializeField] private CoinCollectionHandler _coinCollectionHandler;
         [SerializeField] private DistanceScoreTracker _distanceScoreTracker;
         [SerializeField] private Player _player;
@@ -42,6 +43,8 @@ namespace Installers
         {
             containerBuilder.RegisterValue(_poolService);
             containerBuilder.RegisterValue(_levelSpawner);
+            if (_levelPreloader != null)
+                containerBuilder.RegisterValue(_levelPreloader);
             containerBuilder.RegisterValue(_coinCollectionHandler);
             containerBuilder.RegisterValue(_distanceScoreTracker);
             containerBuilder.RegisterValue(_player);

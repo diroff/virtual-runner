@@ -33,8 +33,8 @@ namespace Gameplay.Mechanics.LevelGeneration
             if (_segmentSpawner == null)
                 return;
 
-            _segmentSpawner.OnRunStarted += HandleRunStarted;
-            _segmentSpawner.OnRunStopped += ReturnAllPickups;
+            _segmentSpawner.OnLevelPrepared += HandleLevelPrepared;
+            _segmentSpawner.OnLevelCleared += ReturnAllPickups;
             _segmentSpawner.OnSegmentSpawned += HandleSegmentSpawned;
             _segmentSpawner.OnSegmentReturned += HandleSegmentReturned;
 
@@ -45,8 +45,8 @@ namespace Gameplay.Mechanics.LevelGeneration
         {
             if (_segmentSpawner != null)
             {
-                _segmentSpawner.OnRunStarted -= HandleRunStarted;
-                _segmentSpawner.OnRunStopped -= ReturnAllPickups;
+                _segmentSpawner.OnLevelPrepared -= HandleLevelPrepared;
+                _segmentSpawner.OnLevelCleared -= ReturnAllPickups;
                 _segmentSpawner.OnSegmentSpawned -= HandleSegmentSpawned;
                 _segmentSpawner.OnSegmentReturned -= HandleSegmentReturned;
             }
@@ -54,7 +54,7 @@ namespace Gameplay.Mechanics.LevelGeneration
             ReturnAllPickups();
         }
 
-        private void HandleRunStarted()
+        private void HandleLevelPrepared()
         {
             ResetSpawning();
 

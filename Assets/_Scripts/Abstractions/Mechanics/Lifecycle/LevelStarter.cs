@@ -19,7 +19,12 @@ namespace Abstractions.Mechanics.Lifecycle
         protected virtual void Start()
         {
             if (_autoStartOnAwake)
-                ExecuteStartAsync(this.GetCancellationTokenOnDestroy()).Forget();
+                ExecuteStart();
+        }
+
+        public void ExecuteStart()
+        {
+            ExecuteStartAsync(this.GetCancellationTokenOnDestroy()).Forget();
         }
 
         public async UniTaskVoid ExecuteStartAsync(CancellationToken cancellationToken = default)

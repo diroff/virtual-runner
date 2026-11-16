@@ -30,6 +30,8 @@ namespace Gameplay.Mechanics.Progression
                 return;
             }
 
+            _segmentSpawner.OnLevelPrepared += ResetDistance;
+            _segmentSpawner.OnLevelCleared += ResetDistance;
             _segmentSpawner.OnRunStarted += HandleRunStarted;
             _segmentSpawner.OnRunStopped += HandleRunStopped;
             _movement.OnDistanceMoved += HandleDistanceMoved;
@@ -41,6 +43,8 @@ namespace Gameplay.Mechanics.Progression
         {
             if (_segmentSpawner != null)
             {
+                _segmentSpawner.OnLevelPrepared -= ResetDistance;
+                _segmentSpawner.OnLevelCleared -= ResetDistance;
                 _segmentSpawner.OnRunStarted -= HandleRunStarted;
                 _segmentSpawner.OnRunStopped -= HandleRunStopped;
             }
@@ -55,13 +59,19 @@ namespace Gameplay.Mechanics.Progression
             }
         }
 
-        private void HandleRunStarted()
+        private void ResetDistance()
         {
             _distance = 0f;
-            _isTracking = true;
             OnDistanceChanged?.Invoke(_distance);
+        }
+
+        private void HandleRunStarted()
+        {
             if (_isTracking)
-                OnTrackingStarted?.Invoke();
+                return;
+
+            _isTracking = true;
+            OnTrackingStarted?.Invoke();
         }
 
         private void HandleRunStopped()

@@ -74,7 +74,9 @@ namespace Gameplay.Mechanics.LevelGeneration
         private readonly ShuffleBag<LevelSegment> _segmentBag = new();
         private readonly Dictionary<VariantBagKey, ShuffleBag<int>> _variantBags = new();
 
-        private CancellationTokenSource _startCancellation;
+        private CancellationTokenSource _prepareCancellation;
+        private UniTaskCompletionSource<bool> _preparationCompletion;
+        private int _startRequestVersion;
 
         private Vector3 _runOriginPosition;
         private Vector3 _runForward;
@@ -82,97 +84,191 @@ namespace Gameplay.Mechanics.LevelGeneration
         private float _playerDistance;
         private SegmentDifficulty _currentDifficulty;
 
-        private bool _isStarting;
+        private bool _isPrepared;
         private bool _isRunning;
 
+        public event Action OnLevelPrepared;
+        public event Action OnLevelCleared;
         public event Action OnRunStarted;
         public event Action OnRunStopped;
         public event Action<float> OnSegmentRequested;
         public event Action<LevelSegment, float> OnSegmentSpawned;
         public event Action<LevelSegment> OnSegmentReturned;
 
+        public bool IsPrepared => _isPrepared;
+        public bool IsPreparing => _preparationCompletion != null;
         public bool IsRunning => _isRunning;
         public int ActiveSegmentCount => _activeSegments.Count;
         public SegmentDifficulty CurrentDifficulty => _currentDifficulty;
 
-        public async UniTask StartRunAsync(CancellationToken cancellationToken = default)
+        public async UniTask<bool> PrepareLevelAsync(CancellationToken cancellationToken = default)
         {
-            if (_isStarting)
-                return;
+            if (_isPrepared)
+                return true;
 
-            if (_isRunning)
-                StopRun();
-
-            ReturnActiveSegments();
+            if (_preparationCompletion != null)
+            {
+                try
+                {
+                    return await _preparationCompletion.Task.AttachExternalCancellation(cancellationToken);
+                }
+                catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+                {
+                    return false;
+                }
+            }
 
             if (!ValidateSetup())
-                return;
+                return false;
 
-            _isStarting = true;
-
-            CancellationTokenSource startCancellation = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            _startCancellation = startCancellation;
+            UniTaskCompletionSource<bool> completion = new();
+            _preparationCompletion = completion;
+            CancellationTokenSource preparationCancellation = CancellationTokenSource.CreateLinkedTokenSource(
+                cancellationToken, destroyCancellationToken);
+            _prepareCancellation = preparationCancellation;
 
             try
             {
-                await PreloadPoolsAsync(startCancellation.Token);
-                startCancellation.Token.ThrowIfCancellationRequested();
+                await PreloadPoolsAsync(preparationCancellation.Token);
+                preparationCancellation.Token.ThrowIfCancellationRequested();
 
                 Transform origin = _spawnOrigin != null ? _spawnOrigin : transform;
-
                 _runOriginPosition = origin.position;
                 _runForward = Vector3.ProjectOnPlane(origin.forward, Vector3.up).normalized;
                 _runRotation = Quaternion.LookRotation(_runForward, Vector3.up);
 
                 _currentDifficulty = _initialDifficulty;
-
+                _playerDistance = 0f;
                 _segmentBag.Reset();
                 _variantBags.Clear();
 
-                _playerDistance = 0f;
-                _isRunning = true;
-                OnRunStarted?.Invoke();
-                _playerDistance = _distanceTracker.Distance;
-
-                if (!SpawnSegment(_startSegmentPrefab, 0f, _currentDifficulty))
-                {
-                    StopRun();
-                    return;
-                }
-
-                RecyclePassedSegments();
-                EnsureSegmentsAhead();
+                _isPrepared = true;
+                OnLevelPrepared?.Invoke();
+                completion.TrySetResult(true);
+                return true;
             }
-            catch (OperationCanceledException) when (startCancellation.IsCancellationRequested)
+            catch (OperationCanceledException) when (preparationCancellation.IsCancellationRequested)
             {
-
+                completion.TrySetResult(false);
+                return false;
             }
-            catch
+            catch (Exception exception)
             {
-                StopRun();
-                ReturnActiveSegments();
-                throw;
+                _isPrepared = false;
+                completion.TrySetResult(false);
+                Debug.LogException(exception, this);
+                return false;
             }
             finally
             {
-                _isStarting = false;
+                if (ReferenceEquals(_prepareCancellation, preparationCancellation))
+                    _prepareCancellation = null;
 
-                if (ReferenceEquals(_startCancellation, startCancellation))
-                    _startCancellation = null;
+                if (ReferenceEquals(_preparationCompletion, completion))
+                    _preparationCompletion = null;
 
-                startCancellation.Dispose();
+                preparationCancellation.Dispose();
+            }
+        }
+
+        public bool SpawnStartSegment()
+        {
+            if (!_isPrepared)
+                return false;
+
+            if (_activeSegments.Count > 0)
+                return true;
+
+            return SpawnSegment(_startSegmentPrefab, 0f, _initialDifficulty);
+        }
+
+        public bool SpawnNextSegment()
+        {
+            if (!_isPrepared)
+                return false;
+
+            if (_activeSegments.Count == 0)
+                return SpawnStartSegment();
+
+            if (_availableSegmentPrefabs.Count == 0)
+                return false;
+
+            float startDistance = _activeSegments[_activeSegments.Count - 1].EndDistance;
+            LevelSegment prefab = _segmentBag.Next(_availableSegmentPrefabs);
+            OnSegmentRequested?.Invoke(startDistance);
+            return SpawnSegment(prefab, startDistance, _currentDifficulty);
+        }
+
+        public bool EnsureInitialSegments(int additionalSegmentCount)
+        {
+            if (!_isPrepared)
+                return false;
+
+            if (!SpawnStartSegment())
+                return false;
+
+            int targetCount = Mathf.Max(0, additionalSegmentCount) + 1;
+
+            while (_activeSegments.Count < targetCount)
+                if (!SpawnNextSegment())
+                    return false;
+
+            return true;
+        }
+
+        public async UniTask StartRunAsync(CancellationToken cancellationToken = default)
+        {
+            if (_isRunning)
+                return;
+
+            int requestVersion = _startRequestVersion;
+
+            if (!await PrepareLevelAsync(cancellationToken))
+                return;
+
+            if (requestVersion != _startRequestVersion || cancellationToken.IsCancellationRequested || _isRunning)
+                return;
+
+            if (!SpawnStartSegment())
+                return;
+
+            _playerDistance = _distanceTracker.Distance;
+            _isRunning = true;
+            OnRunStarted?.Invoke();
+
+            if (_isRunning)
+            {
+                RecyclePassedSegments();
+                EnsureSegmentsAhead();
             }
         }
 
         public void StopRun()
         {
-            _startCancellation?.Cancel();
+            _startRequestVersion++;
 
             if (!_isRunning)
                 return;
 
             _isRunning = false;
             OnRunStopped?.Invoke();
+        }
+
+        public void ResetLevel()
+        {
+            StopRun();
+            _prepareCancellation?.Cancel();
+
+            bool wasPrepared = _isPrepared || _activeSegments.Count > 0;
+            ReturnActiveSegments();
+            _isPrepared = false;
+            _playerDistance = 0f;
+            _currentDifficulty = _initialDifficulty;
+            _segmentBag.Reset();
+            _variantBags.Clear();
+
+            if (wasPrepared)
+                OnLevelCleared?.Invoke();
         }
 
         public void SetDifficulty(SegmentDifficulty difficulty)
@@ -262,15 +358,10 @@ namespace Gameplay.Mechanics.LevelGeneration
         {
             float targetDistance = _playerDistance + _spawnAheadDistance;
 
-            while (_activeSegments.Count == 0 || _activeSegments[_activeSegments.Count - 1].EndDistance <= targetDistance)
-            {
-                float startDistance = _activeSegments.Count == 0 ? 0f : _activeSegments[_activeSegments.Count - 1].EndDistance;
-                LevelSegment prefab = _segmentBag.Next(_availableSegmentPrefabs);
-                OnSegmentRequested?.Invoke(startDistance);
-
-                if (!SpawnSegment(prefab, startDistance, _currentDifficulty))
+            while (_isRunning && (_activeSegments.Count == 0 ||
+                   _activeSegments[_activeSegments.Count - 1].EndDistance <= targetDistance))
+                if (!SpawnNextSegment())
                     break;
-            }
         }
 
         private void RecyclePassedSegments()
@@ -368,6 +459,11 @@ namespace Gameplay.Mechanics.LevelGeneration
         private void OnDisable()
         {
             StopRun();
+        }
+
+        private void OnDestroy()
+        {
+            ResetLevel();
         }
 
         private void OnValidate()

@@ -14,6 +14,9 @@ namespace Abstractions.Mechanics.Lifecycle
         private bool _isFinished;
         private CancellationTokenSource _cts;
 
+        public UnityAction OnBeforeFinished;
+        public UnityAction OnAfterFinished;
+
         protected virtual void Awake()
         {
             _cts = CancellationTokenSource.CreateLinkedTokenSource(destroyCancellationToken);
@@ -31,12 +34,14 @@ namespace Abstractions.Mechanics.Lifecycle
             _isFinished = true;
 
             _onBeforeFinish?.Invoke();
+            OnBeforeFinished?.Invoke();
             OnBeforeFinish();
 
             await OnFinishProcessAsync(_cts.Token);
 
             OnAfterFinish();
             _onAfterFinish?.Invoke();
+            OnAfterFinished?.Invoke();
         }
 
         protected virtual void OnBeforeFinish() { }
