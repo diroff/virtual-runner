@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Abstraction.Interfaces;
 using Services;
@@ -12,6 +13,8 @@ namespace Gameplay.Mechanics.PowerUps.Projectiles
         private readonly List<(Collider First, Collider Second)> _ignoredPairs = new();
 
         private PoolService _pool;
+
+        public event Action<Collider, Vector3> OnHit;
 
         public bool IsFlying { get; private set; }
         public GameObject Sender => IsFlying ? Shot.Sender : null;
@@ -107,6 +110,8 @@ namespace Gameplay.Mechanics.PowerUps.Projectiles
             _ownColliders.Clear();
             _senderColliders.Clear();
         }
+
+        protected void NotifyHit(Collider collider, Vector3 position) => OnHit?.Invoke(collider, position);
 
         protected abstract void OnLaunch();
         protected abstract void OnStop();

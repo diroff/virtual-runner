@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6379907636144991442}
-  - component: {fileID: 2187181757720428855}
   - component: {fileID: 1256510200192705622}
+  - component: {fileID: 1946089880006757506}
   m_Layer: 0
   m_Name: View
   m_TagString: Untagged
@@ -34,19 +34,6 @@ Transform:
   - {fileID: 1170106604854488828}
   m_Father: {fileID: 5362043467022281059}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2187181757720428855
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2246445157207952343}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95579c86a36e54d4fac2c3647ef73591, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Components.Interaction.InteractionHider
-  _interactable: {fileID: -2323687062639347825}
 --- !u!114 &1256510200192705622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,6 +54,25 @@ MonoBehaviour:
   _rotateMode: 1
   _loopType: 2
   _loops: -1
+--- !u!114 &1946089880006757506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2246445157207952343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f05779f1711b02418078df6019aa3a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Mechanics.Collectables.CoinView
+  _coin: {fileID: -2323687062639347825}
+  _visualRoot: {fileID: 6379907636144991442}
+  _rotationAnimation: {fileID: 1256510200192705622}
+  _duration: 0.45
+  _riseHeight: 0.8
+  _punchScale: 1.3
+  _rotationAngle: 360
 --- !u!1001 &5612460826723896968
 PrefabInstance:
   m_ObjectHideFlags: 0

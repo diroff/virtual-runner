@@ -57,6 +57,15 @@ namespace Gameplay.Components.Animations
             Tween.Play();
         }
 
+        public void Restart()
+        {
+            if (Tween == null || !Tween.IsActive())
+                RebuildTween(false);
+
+            RestoreState();
+            Tween.Restart();
+        }
+
         public void Stop(bool restoreState = false)
         {
             if (Tween == null)

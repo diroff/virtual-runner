@@ -12,10 +12,15 @@ namespace Gameplay.Mechanics.LevelGeneration
 
         [Inject] private LevelSegmentSpawner _spawner;
 
-        private void Start()
+        private void Awake()
         {
             if (_preloadOnStart)
                 Preload();
+        }
+
+        private void Start()
+        {
+
         }
 
         public void Preload()

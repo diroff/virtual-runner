@@ -59,6 +59,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Installers.GameplayClassicInstaller
   _poolService: {fileID: 3917345758807360195}
   _levelSpawner: {fileID: 544604988709195225}
+  _levelPreloader: {fileID: 1285342167217302519}
   _coinCollectionHandler: {fileID: 7772639769090006894}
   _distanceScoreTracker: {fileID: 250795028422402142}
   _player: {fileID: 0}
@@ -71,6 +72,8 @@ MonoBehaviour:
   _levelPowerUpSpawner: {fileID: 2983678305580909858}
   _movementSpeedDirector: {fileID: 2025459335336214153}
   _scoreMultiplierDirector: {fileID: 4134823873333636713}
+  _levelStarter: {fileID: 8149668662022065132}
+  _levelFinisher: {fileID: 5131553406845199968}
 --- !u!1 &796472385109386432
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,7 +124,116 @@ MonoBehaviour:
   _onAfterStart:
     m_PersistentCalls:
       m_Calls: []
-  _autoStartOnAwake: 1
+  _autoStartOnAwake: 0
+--- !u!1 &1005164746549029347
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7657355600663009787}
+  - component: {fileID: 2682928161233427015}
+  - component: {fileID: 7032940041963215485}
+  m_Layer: 0
+  m_Name: ProjectileHitEffectHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7657355600663009787
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005164746549029347}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7376200303963774705}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2682928161233427015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005164746549029347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 847661d7070e4d3abfdc2a0d5d1b29ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Mechanics.PowerUps.Projectiles.ProjectileHitEffectHandler
+  _hitEffectPlayer: {fileID: 7032940041963215485}
+--- !u!114 &7032940041963215485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005164746549029347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c5fc7ce13a75a4c990bfd6cc024c8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Components.Animations.PooledEffectPlayer
+  _prefabs:
+  - {fileID: 7687081862680121423, guid: 2c9a4b3d5daada84782e84fef4e8db51, type: 3}
+  _poolCapacity: 10
+  _returnMode: 0
+  _returnDelay: 0
+--- !u!1 &2377717438687274814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5373073987003240443}
+  - component: {fileID: 1285342167217302519}
+  m_Layer: 0
+  m_Name: LevelPreloader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5373073987003240443
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2377717438687274814}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2120946918989291042}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1285342167217302519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2377717438687274814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 541026739dce48e8ade9a79099ea336f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Mechanics.LevelGeneration.LevelPreloader
+  _additionalSegmentCount: 1
+  _preloadOnStart: 1
 --- !u!1 &2608169799931768962
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,6 +279,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Mechanics.Progression.ScoreMultiplierDirector
   _profile: {fileID: 11400000, guid: adf81e6ed9194492919a778c0782622f, type: 2}
+--- !u!1 &3648113826903692327
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7376200303963774705}
+  m_Layer: 0
+  m_Name: EffectsPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7376200303963774705
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3648113826903692327}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8676981852103231727}
+  - {fileID: 7657355600663009787}
+  m_Father: {fileID: 2120946918989291042}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4105449169946764829
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,9 +359,9 @@ MonoBehaviour:
   _profile: {fileID: 11400000, guid: 7dfa9fc120ca425aa91b751318eb1c25, type: 2}
   _pickupPrefabs:
   - {fileID: 3859099827146259220, guid: c7a9a69fda836a146866e919c26d0696, type: 3}
-  - {fileID: 6238931745733146117, guid: 4dde3529b9053484c840dd903e3303d9, type: 3}
-  - {fileID: 4323876858520311550, guid: 38a5515d047fc4d4790e4089ee92ee12, type: 3}
-  - {fileID: 2204096953194453436, guid: d2e11254c8ad4ac49aa5c7848d9e7860, type: 3}
+  - {fileID: 4695820764836063464, guid: b8c4bb1990ea3cb4f83549580173b75a, type: 3}
+  - {fileID: 2900950057920019552, guid: 19c7e2926ff8524428da68f52de8a703, type: 3}
+  - {fileID: 1566355382206018502, guid: 8d52f446e514e07499d4d466cc496498, type: 3}
   _preloadCountPerPrefab: 1
 --- !u!1 &4712392001838577163
 GameObject:
@@ -267,6 +412,56 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   _multiplier: 1
+  _collectEffectsPlayer: {fileID: 9119719955315501961}
+--- !u!1 &5392414433702443274
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8676981852103231727}
+  - component: {fileID: 9119719955315501961}
+  m_Layer: 0
+  m_Name: CollectCoinEffectsPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8676981852103231727
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5392414433702443274}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7376200303963774705}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9119719955315501961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5392414433702443274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c5fc7ce13a75a4c990bfd6cc024c8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Components.Animations.PooledEffectPlayer
+  _prefabs:
+  - {fileID: 2166758878863700830, guid: 1bc5352f9d5c9974b983b9bcb197c86a, type: 3}
+  _poolCapacity: 5
+  _returnMode: 0
+  _returnDelay: 0
 --- !u!1 &5403161851434728193
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,7 +524,7 @@ MonoBehaviour:
   - {fileID: 400458016309049903, guid: 4fa933f524e96e6469697a1ccd6f4b56, type: 3}
   - {fileID: 7178611602950085683, guid: 189604ea3548dda4cbb8ae6a7913ab06, type: 3}
   - {fileID: 2140886323763598969, guid: b181da4b3685bc8469fee5145c8f392f, type: 3}
-  _preloadCountPerPrefab: 2
+  _preloadCountPerPrefab: 1
   _preloadBatchSize: 2
   _spawnAheadDistance: 67
   _despawnBehindDistance: 33
@@ -369,6 +564,7 @@ Transform:
   - {fileID: 231459606045655201}
   - {fileID: 3481733616749975572}
   - {fileID: 4002488521220988906}
+  - {fileID: 5373073987003240443}
   - {fileID: 2440630743921382517}
   - {fileID: 6924666860011253829}
   - {fileID: 7071958164674688825}
@@ -376,6 +572,8 @@ Transform:
   - {fileID: 8403066002994677180}
   - {fileID: 362829424967787438}
   - {fileID: 2067463434475830693}
+  - {fileID: 9033006181752630732}
+  - {fileID: 7376200303963774705}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5533965113052409826
@@ -468,6 +666,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Mechanics.Scoring.DistanceScoreMechanic
   _pointsPerMeter: 1
   _initialMultiplier: 1
+--- !u!1 &6268558444323716610
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9033006181752630732}
+  - component: {fileID: 5204990434482397330}
+  m_Layer: 0
+  m_Name: SceneLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9033006181752630732
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6268558444323716610}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2120946918989291042}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5204990434482397330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6268558444323716610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 728c2c92520bb5e448e62a2ba1712e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Components.Level.SceneLoader
+  _sceneName: 
 --- !u!1 &6556191798427107868
 GameObject:
   m_ObjectHideFlags: 0

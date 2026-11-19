@@ -1,5 +1,6 @@
 using Abstractions.Components.Zone;
 using Abstractions.Interfaces;
+using Cysharp.Threading.Tasks;
 using Gameplay.Components.Interaction;
 using System;
 using UnityEngine;
@@ -75,8 +76,13 @@ namespace Abstractions.Components.Interaction
         {
             var interactor = other.GetComponentInParent<Interactor>();
 
-            if (interactor != null)
-                Interact(interactor.Source);
+            if (interactor == null)
+                return;
+
+            if (!interactor.IsActive)
+                return;
+
+            Interact(interactor.Source);
         }
     }
 }

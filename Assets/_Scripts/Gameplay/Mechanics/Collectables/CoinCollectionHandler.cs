@@ -1,3 +1,4 @@
+using Gameplay.Components.Animations;
 using Gameplay.Components.Interaction;
 using Gameplay.Models;
 using System;
@@ -11,6 +12,9 @@ namespace Gameplay.Mechanics.Collectables
         [Header("Collection")]
         [SerializeField] private List<CoinCollector> _coinCollectors = new();
         [SerializeField, Min(0.01f)] private float _multiplier = 1f;
+
+        [Header("View")]
+        [SerializeField] private PooledEffectPlayer _collectEffectsPlayer;
 
         private readonly HashSet<CoinCollector> _registeredCollectors = new();
         private Wallet _sessionWallet;
@@ -145,6 +149,7 @@ namespace Gameplay.Mechanics.Collectables
             if (reward <= 0)
                 return;
 
+            _collectEffectsPlayer.Play(coin.transform.position);
             _sessionWallet.Add(reward);
             OnCoinsCollected?.Invoke(reward);
         }

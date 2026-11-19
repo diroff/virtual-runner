@@ -15,7 +15,7 @@ namespace Gameplay.Mechanics.Lifecycle
 {
     public class GameplayLevelStarter : LevelStarter
     {
-        [Inject] private Player _player;
+        [Inject] protected Player Player;
         [Inject] private LevelSegmentSpawner _levelSpawner;
         [Inject] private CoinCollectionHandler _coinCollectionHandler;
         [Inject] private DistanceScoreTracker _distanceScoreTracker;
@@ -26,7 +26,6 @@ namespace Gameplay.Mechanics.Lifecycle
 
         private Score _score;
         private Wallet _wallet;
-
 
         protected override void OnBeforeStart()
         {
@@ -44,6 +43,7 @@ namespace Gameplay.Mechanics.Lifecycle
         protected override async UniTask OnStartProcessAsync(CancellationToken cancellationToken)
         {
             _powerUpHandler.StartHandling();
+            Player.EnableInteractors();
 
             await _levelSpawner.StartRunAsync(cancellationToken);
 

@@ -25,7 +25,6 @@ namespace Gameplay.Mechanics.PowerUps
                 return;
 
             base.HandleInteraction(interactor);
-            Hide();
         }
     }
 }

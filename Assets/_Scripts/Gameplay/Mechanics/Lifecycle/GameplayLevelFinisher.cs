@@ -28,11 +28,12 @@ namespace Gameplay.Mechanics.Lifecycle
             base.OnBeforeFinish();
 
             _powerUpHandler.StopHandling();
-
             _levelSpawner.StopRun();
 
             _movement.StopMovement();
             _distanceScoreTracker.StopScoring();
+
+            Player.DisableInteractors();
         }
 
         protected override async UniTask OnFinishProcessAsync(CancellationToken cancellationToken)

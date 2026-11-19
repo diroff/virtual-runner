@@ -78,6 +78,8 @@ namespace Gameplay.Mechanics.PowerUps.Projectiles
             if (!IsFlying || ShouldIgnore(collider))
                 return;
 
+            NotifyHit(collider, collider.ClosestPoint(transform.position));
+
             IDamageable damageable = collider.GetComponentInParent<IDamageable>();
             if (damageable != null)
             {
