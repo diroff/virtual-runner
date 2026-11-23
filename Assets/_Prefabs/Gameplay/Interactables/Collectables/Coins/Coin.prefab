@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6379907636144991442}
   - component: {fileID: 1256510200192705622}
   - component: {fileID: 1946089880006757506}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,6 +152,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 7fa93266725d152428ae93262ef20bcf, type: 3}
       propertyPath: m_Name
       value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7fa93266725d152428ae93262ef20bcf, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7fa93266725d152428ae93262ef20bcf, type: 3}
       propertyPath: m_IsActive
@@ -305,6 +309,10 @@ PrefabInstance:
     - target: {fileID: 8516786005925837427, guid: d8e7d682c212c1741adfb76957f48a72, type: 3}
       propertyPath: m_Name
       value: Coin_Gold_Star
+      objectReference: {fileID: 0}
+    - target: {fileID: 8516786005925837427, guid: d8e7d682c212c1741adfb76957f48a72, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8516786005925837427, guid: d8e7d682c212c1741adfb76957f48a72, type: 3}
       propertyPath: m_IsActive

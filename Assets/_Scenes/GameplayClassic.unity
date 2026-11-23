@@ -1456,14 +1456,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 4926343130673719175, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
-      propertyPath: _baseHealth
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7199592679784898196, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
-      propertyPath: _collectionTarget
-      value: 
-      objectReference: {fileID: 1147140275}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1491,11 +1483,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c65352ca07a0d194d9cfdcf307e13a8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Mechanics.Creatures.Player
---- !u!4 &1147140275 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1447473340435096488, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}
-  m_PrefabInstance: {fileID: 1147140272}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1147140276 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3370072930662132254, guid: c932c5e001acc9d4fa2124f1e3195c20, type: 3}

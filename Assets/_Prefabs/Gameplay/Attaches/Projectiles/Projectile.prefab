@@ -116,7 +116,7 @@ MonoBehaviour:
   _oneShot: 0
   LayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
   StayFrequency: 0
   _onEnterEvent:
     m_PersistentCalls:

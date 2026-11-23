@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5896884526774598222}
   - component: {fileID: 8611007091907716574}
   - component: {fileID: 5306654590951023244}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PowerboxStar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4954,7 +4954,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3588526919015695000}
   - component: {fileID: 5225423133012170629}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5010,7 +5010,7 @@ GameObject:
   - component: {fileID: 3859099827146259220}
   - component: {fileID: -2275061072439826616}
   - component: {fileID: -1521063647304838030}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PowerUpBlaster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5147,7 +5147,7 @@ GameObject:
   - component: {fileID: 721603969356106563}
   - component: {fileID: 6565755542269032480}
   - component: {fileID: 7916226183346535086}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tinysparkles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10089,7 +10089,7 @@ GameObject:
   - component: {fileID: 7101276489181295767}
   - component: {fileID: 4145015943556279354}
   - component: {fileID: 2045263258832583759}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: MagicDust
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14955,7 +14955,7 @@ GameObject:
   - component: {fileID: 1619712336083459848}
   - component: {fileID: 1555225001421661445}
   - component: {fileID: 6902880968488213380}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GlowCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19808,9 +19808,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5355721638536092742, guid: 002f53c83eea00643a8e1f29da9004c4, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5616473478449638939, guid: 002f53c83eea00643a8e1f29da9004c4, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8098260581154391994, guid: 002f53c83eea00643a8e1f29da9004c4, type: 3}
       propertyPath: m_Name
       value: LevelupCylinderYellow
+      objectReference: {fileID: 0}
+    - target: {fileID: 8098260581154391994, guid: 002f53c83eea00643a8e1f29da9004c4, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
