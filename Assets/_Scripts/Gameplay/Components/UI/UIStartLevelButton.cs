@@ -1,32 +1,23 @@
+using System.Threading;
 using Abstractions.Mechanics.Lifecycle;
+using Abstractions.UI;
 using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Gameplay.Mechanics.UI
 {
-    public class UIStartLevelButton : MonoBehaviour
+    public class UIStartLevelButton : UIButtonBase
     {
-        [SerializeField] private Button _button;
         [SerializeField] private UIStartPanel _startPanel;
 
         [Inject] private LevelStarter _levelStarter;
 
-        private void OnEnable()
+        protected override async UniTask OnClickAsync(CancellationToken cancellationToken)
         {
-            _button.onClick.AddListener(OnStartButtonClicked);
-        }
-
-        private void OnDisable()
-        {
-            _button.onClick.RemoveListener(OnStartButtonClicked);
-        }
-
-        private void OnStartButtonClicked()
-        {
+            cancellationToken.ThrowIfCancellationRequested();
             _levelStarter.ExecuteStart();
-            _startPanel.Hide().Forget();
+            await _startPanel.Hide();
         }
     }
 }

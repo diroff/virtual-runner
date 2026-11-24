@@ -1,32 +1,23 @@
+using System.Threading;
+using Services;
+using Abstractions.UI;
 using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
-using Services;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Gameplay.Mechanics.UI
 {
-    public class UIRestartButton : MonoBehaviour
+    public class UIRestartButton : UIButtonBase
     {
-        [SerializeField] private Button _button;
         [SerializeField] private UIEndPanel _exitPanel;
 
         [Inject] private SceneManagerService _sceneLoader;
 
-        private void OnEnable()
+        protected override async UniTask OnClickAsync(CancellationToken cancellationToken)
         {
-            _button.onClick.AddListener(OnRestartButtonClicked);
-        }
-
-        private void OnDisable()
-        {
-            _button.onClick.RemoveListener(OnRestartButtonClicked);
-        }
-
-        private void OnRestartButtonClicked()
-        {
+            cancellationToken.ThrowIfCancellationRequested();
+            await _exitPanel.Hide();
             _sceneLoader.ReloadScene();
-            _exitPanel.Hide().Forget();
         }
     }
 }

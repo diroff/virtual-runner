@@ -1,24 +1,8 @@
-using Cysharp.Threading.Tasks;
-using UnityEngine;
+using Abstractions.UI;
 
 namespace Gameplay.Mechanics.UI
 {
-    public class UIStartPanel : MonoBehaviour
+    public class UIStartPanel : UIPanelBase
     {
-        [SerializeField] private RectTransform _root;
-
-        public async UniTask Show()
-        {
-            _root.gameObject.SetActive(true);
-
-            await UniTask.CompletedTask;
-        }
-
-        public async UniTask Hide()
-        {
-            _root.gameObject.SetActive(false);
-
-            await UniTask.CompletedTask;
-        }
     }
 }

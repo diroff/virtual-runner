@@ -1,33 +1,23 @@
-using Cysharp.Threading.Tasks;
-using Gameplay.Components.Level;
-using Reflex.Attributes;
+using System.Threading;
 using Services;
+using Abstractions.UI;
+using Cysharp.Threading.Tasks;
+using Reflex.Attributes;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Gameplay.Mechanics.UI
 {
-    public class UIExitToMenuButton : MonoBehaviour
+    public class UIExitToMenuButton : UIButtonBase
     {
-        [SerializeField] private Button _button;
-        [SerializeField] private UIStartPanel _startPanel;
+        [SerializeField] private UIPanelBase _panel;
 
         [Inject] private SceneManagerService _sceneLoader;
 
-        private void OnEnable()
+        protected override async UniTask OnClickAsync(CancellationToken cancellationToken)
         {
-            _button.onClick.AddListener(OnExitButtonClicked);
-        }
-
-        private void OnDisable()
-        {
-            _button.onClick.RemoveListener(OnExitButtonClicked);
-        }
-
-        private void OnExitButtonClicked()
-        {
+            cancellationToken.ThrowIfCancellationRequested();
+            await _panel.Hide();
             _sceneLoader.LoadMenuScene();
-            _startPanel.Hide().Forget();
         }
     }
 }
